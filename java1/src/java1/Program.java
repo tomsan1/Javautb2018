@@ -3,33 +3,43 @@ package java1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-
 
 public class Program {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
+	
 		
 	while(true){
 				
 			System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver 3 för att räkna båda");
 		
+			
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 			int val = Integer.parseInt(input.readLine());
 		
 			if (val == 1){
 				System.out.println("val1");
-				System.out.println("Antal ord:" + countWords(readInText()));
+				String textInput = readInText();
+				if (textInput.length()>1) {
+					System.out.println("Antal ord:" + countWords(textInput));
+				}
+				
 			}
 			if (val ==2){
 				System.out.println("val2");
-				System.out.println("Antal bokstäver:" + countLetters(readInText()));
+				String textInput = readInText();
+				if (textInput.length()>1) {
+				System.out.println("Antal bokstäver:" + countLetters(textInput));
+				}
 			}
 			if (val == 3){
 				System.out.println("val3");
 				String textInput = readInText();
-				System.out.println("Antal bokstäver:" + countLetters(textInput));
-				System.out.println("Antal ord:" + countWords(textInput));
+				if (textInput.length()>1) {
+					System.out.println("Antal bokstäver:" + countLetters(textInput));
+					System.out.println("Antal ord:" + countWords(textInput));
+				}
+				
 			}
 		}
 	}
@@ -45,6 +55,7 @@ public class Program {
 				noOfWords++;	
 		return noOfWords;
 	}
+	
 	public static int countLetters(String string) {
 		
 		int noOfLetters = 0;
@@ -65,7 +76,4 @@ public class Program {
 		
 		return input.readLine();
 	}
-	
-	
-
 }
