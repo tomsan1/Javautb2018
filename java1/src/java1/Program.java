@@ -3,6 +3,11 @@ package java1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Clock;
+import java.time.LocalDateTime;
 
 public class Program {
 
@@ -18,24 +23,21 @@ public class Program {
 			int val = Integer.parseInt(input.readLine());
 		
 			if (val == 1){
-				System.out.println("val1");
 				String textInput = readInText();
-				if (textInput.length()>1) {
+				if (textInput.length()>=1) {
 					System.out.println("Antal ord:" + countWords(textInput));
 				}
 				
 			}
 			if (val ==2){
-				System.out.println("val2");
 				String textInput = readInText();
-				if (textInput.length()>1) {
+				if (textInput.length()>=1) {
 				System.out.println("Antal bokstäver:" + countLetters(textInput));
 				}
 			}
 			if (val == 3){
-				System.out.println("val3");
 				String textInput = readInText();
-				if (textInput.length()>1) {
+				if (textInput.length()>=1) {
 					System.out.println("Antal bokstäver:" + countLetters(textInput));
 					System.out.println("Antal ord:" + countWords(textInput));
 				}
