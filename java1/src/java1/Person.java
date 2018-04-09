@@ -20,5 +20,12 @@ public class Person {
 		return this.lName;
 	}
 	
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getPhoneNumber() {
+		return this.phoneNumber;
+	}
+	
 
 }
