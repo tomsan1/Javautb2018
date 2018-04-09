@@ -28,14 +28,24 @@ public class Program {
 	
 	public static int countWords(String string) {
 		
-		System.out.println(string);
+		int noOfWords = 0;
 		
-		//pattern och matcher
-		return 1;
+		System.out.println("Detta kommer in i countwords " + string);
+		
+		String[] ord = string.split("\\b");
+		
+		for (String theOrd : ord)
+			if(theOrd.matches("\\w+")) 
+				noOfWords++;	
+		return noOfWords;
 	}
 	public static int countLetters(String string) {
 		//pattern och matcher
 		System.out.println(string);
+		
+		string.m
+		
+		
 		return 1;
 	}
 	
