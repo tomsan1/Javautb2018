@@ -10,31 +10,30 @@ public class Program {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver 3 för att räkna båda välj esc för att återgå till huvudmeny");
+	while(true){
+			
 		
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		int val = Integer.parseInt(input.readLine());
+			System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver 3 för att räkna båda");
 		
+			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+			int val = Integer.parseInt(input.readLine());
 		
-		
-		if (val == 1){
-			System.out.println("val1");
-			System.out.println("Antal ord:" + countWords(readInText()));
-		}
-		if (val ==2){
-			System.out.println("val2");
-			System.out.println("Antal bokstäver:" + countLetters(readInText()));
-		}
-		if (val == 3){
-			System.out.println("val3");
-			String textInput = readInText();
-			System.out.println("Antal bokstäver:" + countLetters(textInput));
-			System.out.println("Antal ord:" + countWords(textInput));
-		}
-		
-
+			if (val == 1){
+				System.out.println("val1");
+				System.out.println("Antal ord:" + countWords(readInText()));
+			}
+			if (val ==2){
+				System.out.println("val2");
+				System.out.println("Antal bokstäver:" + countLetters(readInText()));
+			}
+			if (val == 3){
+				System.out.println("val3");
+				String textInput = readInText();
+				System.out.println("Antal bokstäver:" + countLetters(textInput));
+				System.out.println("Antal ord:" + countWords(textInput));
+			}
 	}
-	
+	}
 	public static int countWords(String string) {
 		
 		int noOfWords = 0;
@@ -53,7 +52,7 @@ public class Program {
 		
 		for (int i = 0; i < string.length(); i++) {
 			
-			if (string.substring(i,i+1).matches("[a-z]") ) {
+			if (string.substring(i,i+1).matches("[a-zA-Z]")) {
 				noOfLetters++;
 			}	
 		}	
@@ -64,7 +63,7 @@ public class Program {
 			
 		System.out.println("Skriv in textmassa avsluta med enter:");
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-	
+		
 		return input.readLine();
 	}
 	
