@@ -11,8 +11,7 @@ public class Program {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
 	while(true){
-			
-		
+				
 			System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver 3 för att räkna båda");
 		
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -32,23 +31,23 @@ public class Program {
 				System.out.println("Antal bokstäver:" + countLetters(textInput));
 				System.out.println("Antal ord:" + countWords(textInput));
 			}
+		}
 	}
-	}
+	
+	
 	public static int countWords(String string) {
 		
 		int noOfWords = 0;
 		
-		String[] ord = string.split("\\b");
-		
+		String[] ord = string.split("\\s");
 		for (String theOrd : ord)
-			if(theOrd.matches("\\w+")) 
+			if(theOrd.matches("\\S+")) 
 				noOfWords++;	
 		return noOfWords;
 	}
 	public static int countLetters(String string) {
 		
 		int noOfLetters = 0;
-		
 		
 		for (int i = 0; i < string.length(); i++) {
 			
