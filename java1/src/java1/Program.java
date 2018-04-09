@@ -10,17 +10,26 @@ public class Program {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver");
+		System.out.println("Välj 1 för att räkna ord 2 för att räkna bokstäver 3 för att räkna båda välj esc för att återgå till huvudmeny");
 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		if (Integer.parseInt(input.readLine()) == 1){
+		int val = Integer.parseInt(input.readLine());
+		
+		
+		
+		if (val == 1){
 			System.out.println("val1");
-			System.out.println(countWords(readInText()));
-			
+			System.out.println("Antal ord:" + countWords(readInText()));
 		}
-		else {
+		if (val ==2){
 			System.out.println("val2");
-			System.out.println(countLetters(readInText()));
+			System.out.println("Antal bokstäver:" + countLetters(readInText()));
+		}
+		if (val == 3){
+			System.out.println("val3");
+			String textInput = readInText();
+			System.out.println("Antal bokstäver:" + countLetters(textInput));
+			System.out.println("Antal ord:" + countWords(textInput));
 		}
 		
 
@@ -30,8 +39,6 @@ public class Program {
 		
 		int noOfWords = 0;
 		
-		System.out.println("Detta kommer in i countwords " + string);
-		
 		String[] ord = string.split("\\b");
 		
 		for (String theOrd : ord)
@@ -40,27 +47,24 @@ public class Program {
 		return noOfWords;
 	}
 	public static int countLetters(String string) {
-		//pattern och matcher
-		System.out.println(string);
 		
-		string.m
+		int noOfLetters = 0;
 		
 		
-		return 1;
+		for (int i = 0; i < string.length(); i++) {
+			
+			if (string.substring(i,i+1).matches("[a-z]") ) {
+				noOfLetters++;
+			}	
+		}	
+		return noOfLetters;
 	}
 	
 	public static String readInText() throws IOException {
-		
-		
-		char c = 'a';
-		
+			
 		System.out.println("Skriv in textmassa avsluta med enter:");
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		//Testar
-		//c = (char)input.read();
-		
-		//System.out.println(c);
-		
+	
 		return input.readLine();
 	}
 	
