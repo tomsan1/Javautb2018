@@ -5,6 +5,7 @@ public class Person {
 	private String fName;
 	private String lName;
 	private int phoneNumber;
+	private String eMail;
 	
 	public void setFName(String fName) {
 		this.fName = fName;
@@ -27,5 +28,11 @@ public class Person {
 		return this.phoneNumber;
 	}
 	
+	public void setEMail(String eMail) {
+		this.eMail = eMail;
+	}
+	public String getEMail() {
+		return this.eMail;
+	}
 
 }
