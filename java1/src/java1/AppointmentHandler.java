@@ -39,19 +39,26 @@ public class AppointmentHandler {
 	}
 	
 	private boolean isAvalible(Appointment appointment) {
+		
 		for(Appointment currentAppointment : ap) {
 			
+			if (currentAppointment.getEndTime().isAfter(appointment.getStartTime()) && ) {
+					return false
+			}
 			//check to see if appointment start time is within range of current appointment in list
-			if (appointment.getStartTime().isAfter(currentAppointment.getStartTime()) && appointment.getStartTime().isBefore(currentAppointment.getEndTime())){
+			/*if (appointment.getStartTime().isAfter(currentAppointment.getStartTime()) && appointment.getStartTime().isBefore(currentAppointment.getEndTime())){
 				//check to see if appointment end time is within range of current appointment in list
 				if (appointment.getEndTime().isAfter(currentAppointment.getStartTime()) && appointment.getEndTime().isBefore(currentAppointment.getEndTime())) {
-					//must add ifstatement to check if employe is the same
-					return false;
+					System.out.println("kom hit");
+					// check to see if both apointmentstart and apointmentend is within range
+					if (appointment.getStartTime().isAfter(currentAppointment.getStartTime()) && appointment.getEndTime().isBefore(currentAppointment.getEndTime())) {
+						//Check if employe is the same
+						if (appointment.getEmploye().getEmployeNr() == currentAppointment.getEmploye().getEmployeNr()) {
+							return false;	
+						}
+					}
 				}
-				
-				 
-			}
-			
+			}*/
 		}
 		return true;
 	}
