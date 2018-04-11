@@ -43,12 +43,16 @@ public class Program {
 			
 		
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		 	System.out.println("Ange start år yyyy:");
+		 	/*System.out.println("Ange start år yyyy:");
 			int year = Integer.parseInt(input.readLine());
 			System.out.println("Ange mån mm:");
 			int month = Integer.parseInt(input.readLine());
 			System.out.println("Ange dag dd:");
-			int day = Integer.parseInt(input.readLine());
+			int day = Integer.parseInt(input.readLine());*/
+			int year = 2018;
+			int month = 04;
+			int day = 11;
+			
 			System.out.println("Ange tim hh:");
 			int hour = Integer.parseInt(input.readLine());
 			System.out.println("Ange min:");

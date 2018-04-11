@@ -1,5 +1,6 @@
 package java1;
 
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 public class AppointmentHandler {
@@ -42,23 +43,35 @@ public class AppointmentHandler {
 		
 		for(Appointment currentAppointment : ap) {
 			
-			if (currentAppointment.getEndTime().isAfter(appointment.getStartTime()) && ) {
-					return false
-			}
-			//check to see if appointment start time is within range of current appointment in list
-			/*if (appointment.getStartTime().isAfter(currentAppointment.getStartTime()) && appointment.getStartTime().isBefore(currentAppointment.getEndTime())){
-				//check to see if appointment end time is within range of current appointment in list
-				if (appointment.getEndTime().isAfter(currentAppointment.getStartTime()) && appointment.getEndTime().isBefore(currentAppointment.getEndTime())) {
-					System.out.println("kom hit");
-					// check to see if both apointmentstart and apointmentend is within range
-					if (appointment.getStartTime().isAfter(currentAppointment.getStartTime()) && appointment.getEndTime().isBefore(currentAppointment.getEndTime())) {
-						//Check if employe is the same
-						if (appointment.getEmploye().getEmployeNr() == currentAppointment.getEmploye().getEmployeNr()) {
-							return false;	
-						}
+			//Case Employe is the same
+			if (currentAppointment.employe.getEmployeNr() == appointment.employe.getEmployeNr()) {
+				//Case 1 if currentAppointment.starttime --->  appointment.starttime ------> currentAppointment.endtime
+				if (currentAppointment.getStartTime().isBefore(appointment.getStartTime()) && currentAppointment.getEndTime().isAfter(appointment.getStartTime())) {
+					return false;
+				}
+				//Case 2 if currentappointment.starttime ---> appointment.endtime -------> currentAppointment.endtime
+				if (currentAppointment.getStartTime().isBefore(appointment.getEndTime()) && currentAppointment.getEndTime().isAfter(appointment.getEndTime())) {
+					return false;
+				}
+				
+				//Case 3 if appointment.starttime -------> currentappointment.starttime --------> appointment.endtime && 
+				//appointment.starttime ------> currentappointment.endtime -------> appointment.endtime
+				if (appointment.getStartTime().isBefore(currentAppointment.getStartTime()) && appointment.getEndTime().isAfter(currentAppointment.getStartTime())) {
+					if (appointment.getStartTime().isBefore(currentAppointment.getEndTime()) && appointment.getEndTime().isAfter(currentAppointment.getEndTime())){
+						return false;
 					}
 				}
-			}*/
+				//May be redundant.... but will keep anyway
+				//Case 4 if currentappointment.starttime ------> appointment.starttime && currentappointment.endtime -------> appointment.endtime
+				if (currentAppointment.getStartTime().isBefore(appointment.getStartTime()) && currentAppointment.getEndTime().isAfter(appointment.getEndTime())) {
+					System.out.println("Case4");
+					return false;
+				}
+				//Case 5 if currentappointment.starttime == appointment.starttime && currentappointment.endtimme == appointment.endtime
+				if (currentAppointment.getStartTime().isEqual(appointment.getStartTime()) && currentAppointment.getEndTime().isEqual(appointment.getEndTime())) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
