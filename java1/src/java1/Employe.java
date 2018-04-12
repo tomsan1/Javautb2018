@@ -1,6 +1,7 @@
 package java1;
 
 public class Employe extends Person {
+	
 	private int employeNr;
 	
 	public Employe(String fName, String lName, String phoneNumber, int employeNr) {
