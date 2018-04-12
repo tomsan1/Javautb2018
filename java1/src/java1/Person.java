@@ -4,7 +4,7 @@ public class Person {
 	
 	private String fName;
 	private String lName;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String eMail;
 	
 	public void setFName(String fName) {
@@ -21,7 +21,7 @@ public class Person {
 		return this.lName;
 	}
 	
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getPhoneNumber() {
@@ -34,5 +34,6 @@ public class Person {
 	public String getEMail() {
 		return this.eMail;
 	}
+	
 
 }

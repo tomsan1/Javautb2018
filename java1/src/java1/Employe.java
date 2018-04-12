@@ -3,7 +3,7 @@ package java1;
 public class Employe extends Person {
 	private int employeNr;
 	
-	public Employe(String fName, String lName, int phoneNumber, int employeNr) {
+	public Employe(String fName, String lName, String phoneNumber, int employeNr) {
 		this.setFName(fName);
 		this.setLName(lName);
 		this.setPhoneNumber(phoneNumber);
@@ -21,5 +21,5 @@ public class Employe extends Person {
 	public int getEmployeNr() {
 		return this.employeNr;
 	}
-
+	
 }

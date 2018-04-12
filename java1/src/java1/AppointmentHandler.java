@@ -1,42 +1,57 @@
 package java1;
 
-import java.time.ZoneOffset;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 
 public class AppointmentHandler {
 	
 	ArrayList<Appointment> ap = new ArrayList<>();
-
 	
 	public void printOutAppointments() {
+		
 		for(Appointment currentAppointment : ap){
 			System.out.println("---------------------------------");
 			System.out.println("Kund:" + currentAppointment.customer.getFname() + " " + currentAppointment.customer.getLName());
 			System.out.println("Frisör:" + currentAppointment.employe.getFname() + " " + currentAppointment.employe.getLName());
-			System.out.println("Start:" + currentAppointment.startTime.toString());
-			System.out.println("Slut:" + currentAppointment.endTime.toString());
-			System.out.println("---------------------------------");
-		}
-
-			
+			System.out.println("Start:" + currentAppointment.getStartTime().toString());
+			System.out.println("Slut:" + currentAppointment.getEndTime().toString());
+			System.out.println("---------------------------------");	
+		}		
 	}
 	
 	public boolean insertAppointment(Appointment appointment) {
 		
 		//Checks if the appointment is ok then inserts it to the array
 		if (isAvalible(appointment)) {
-			ap.add(appointment);
-			return true;
+			
+			if (isValid(appointment)) {
+				
+				ap.add(appointment);
+				return true;
+			}
 		}
 			
-		else { 
-			return false;
-		}	
-		
+		return false;	
 	}
 	
 	public void removeAppointment(Appointment appointment) {
 		//Create code for this will need some id in the Appointmentclass
+	}
+	
+	private boolean isValid(Appointment appointment) {
+		
+		//Will add more conditions here 
+		if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
+			System.out.println("Du försöker skapa en bokning före idag pucko");
+			return false;
+		}
+		
+		return true;
 	}
 	
 	private boolean isAvalible(Appointment appointment) {
@@ -75,5 +90,15 @@ public class AppointmentHandler {
 		}
 		return true;
 	}
+	
+	
+	public void writeAppointmentsToFile() throws IOException {
+		
+		FileWriter fw = new FileWriter(new File("appointments.txt"));
+		fw.write(("Hårdkodat input "));
+		fw.close();
+		
+	}
+	
 }
 

@@ -26,7 +26,6 @@ public class Appointment {
 			//will need some check to se time is availible
 			this.startTime = startTime;
 			this.endTime = endTime;
-		
 	}
 	
 	public void setEmploye(Employe employer) {
@@ -49,16 +48,7 @@ public class Appointment {
 	public String getDescription() {
 		return this.description;
 	}
-	public int getDurationAsMinutes() {
-		
-		int minutes = 0 ;	
-		
-		minutes = (this.getEndTime().getHour() - this.getStartTime().getHour()); 
-		minutes = minutes * 60;
-		minutes = minutes + (this.getEndTime().getMinute() -this.getStartTime().getMinute());
-		
-		return minutes;
-	}
+	
 	public LocalDateTime getStartTime() {
 		return this.startTime;
 	}
@@ -72,4 +62,18 @@ public class Appointment {
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
+	
+	public int getDurationAsMinutes() {
+		
+		int minutes = 0 ;	
+		
+		minutes = (this.getEndTime().getHour() - this.getStartTime().getHour()); 
+		minutes = minutes * 60;
+		minutes = minutes + (this.getEndTime().getMinute() -this.getStartTime().getMinute());
+		
+		return minutes;
+	}
+	
+	
+	
 }
