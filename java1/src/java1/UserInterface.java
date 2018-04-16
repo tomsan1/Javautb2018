@@ -202,10 +202,23 @@ public class UserInterface {
 		
 		Customer newCust = new Customer();
 		System.out.print("Förnamn:");
-		newCust.setFName(input.readLine());
+		String fname = input.readLine();
+		while (fname.isEmpty()) {
+			System.out.println("Förnamn krävs");
+			System.out.print("Förnamn:");
+			fname = input.readLine();
+		}
+		newCust.setFName(fname);
+	
 		System.out.print("Efternamn:");
-		newCust.setLName(input.readLine());
+		String lname = input.readLine();
+		while (lname.isEmpty()) {
+			System.out.println("Efternamn krävs");
+			System.out.print("Efternamn:");
+			lname = input.readLine();
+		}
 		
+		newCust.setLName(lname);
 		newCust.setCustNumber(myCustHandler.getFirstAvalibleCustNr());
 		return newCust;
 		
@@ -217,9 +230,21 @@ public class UserInterface {
 		
 		Employe newEmp = new Employe();
 		System.out.print("Förnamn:");
-		newEmp.setFName(input.readLine());
+		String fname = input.readLine();
+		while (fname.isEmpty()) {
+			System.out.println("Förnamn krävs");
+			System.out.println("Förnamn:");
+			fname = input.readLine();
+		}
+		newEmp.setFName(fname);
 		System.out.print("Efternamn:");
-		newEmp.setLName(input.readLine());
+		String lname = input.readLine();
+		while (lname.isEmpty()) {
+			System.out.println("Efternamn krävs");
+			System.out.println("Efternamn:");
+			lname = input.readLine();
+		}
+		newEmp.setLName(lname);
 		newEmp.setEmployeNr(myEmpHandler.getFirstAvalibleEmpNr());
 		return newEmp;
 		
