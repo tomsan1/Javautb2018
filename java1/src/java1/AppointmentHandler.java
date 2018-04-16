@@ -47,7 +47,7 @@ public class AppointmentHandler {
 		
 		//Will add more conditions here 
 		if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
-			System.out.println("Du försöker skapa en bokning före idag pucko");
+			System.out.println("Du försöker skapa en bokning före aktuellt datum var vänlig köp en tidsmaskin");
 			return false;
 		}
 		

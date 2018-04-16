@@ -10,6 +10,7 @@ public class UserInterface {
 	AppointmentHandler myAppHandler = new AppointmentHandler();
 	CustomerHandler myCustHandler = new CustomerHandler();
 	EmployeHandler myEmpHandler = new EmployeHandler();
+	ErrorHandler myErrHandler = new ErrorHandler();
 	
 	public void printMenu() {
 		System.out.println("-------------Meny-----------");
@@ -20,7 +21,8 @@ public class UserInterface {
 		System.out.println("5. Visa alla kunder");
 		System.out.println("6. Skapa ny anställd");
 		System.out.println("7. Visa alla anställda");
-		System.out.println("8. test");
+		System.out.println("8. Visa första lediga anstnr");
+		System.out.println("9. Avsluta");
 		System.out.println("----------------------------");
 		
 	}
@@ -29,11 +31,18 @@ public class UserInterface {
 		
 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		while (true) {
+		boolean runMenu = true;
+		while (runMenu) {
 		printMenu();
 			
 			int menuChoice = 0;
-			menuChoice = Integer.parseInt(input.readLine());
+			try{
+				menuChoice = Integer.parseInt(input.readLine());
+			}
+			catch (NumberFormatException e){
+				myErrHandler.errorHasOccured(e, "Otillåtet menyval vänligen ange siffra som motsvarar menyvalet");
+				continue;
+			}
 		
 			switch (menuChoice) {
 				case 1: addAppointment();
@@ -51,10 +60,16 @@ public class UserInterface {
 						
 				case 6: Employe myEmp = createEmploye();
 						myEmpHandler.addEmploye(myEmp);
+						break;
 				
 				case 7: myEmpHandler.printAllEmployes();
 						break;
+						
 				case 8: System.out.println(myEmpHandler.getFirstAvalibleEmpNr());
+						break;
+				
+				case 9: System.out.println("Avslutar programmet");
+						runMenu = false;
 						break;
 			}
 		}
@@ -65,24 +80,100 @@ public class UserInterface {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	 	
 		//Input for date and time
-		System.out.println("Ange start år yyyy:");
-		int year = Integer.parseInt(input.readLine());
-		System.out.println("Ange mån mm:");
-		int month = Integer.parseInt(input.readLine());
-		System.out.println("Ange dag dd:");
-		int day = Integer.parseInt(input.readLine());
-		System.out.println("Ange tim hh:");
-		int hour = Integer.parseInt(input.readLine());
-		System.out.println("Ange min:");
-		int minute = Integer.parseInt(input.readLine());
-		System.out.println("Ange tid i minuter för klippning:");
-		int duration = Integer.parseInt(input.readLine());
+		
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		int hour = 0;
+		int minute = 0;
+		int duration = 0;
+		
+		try {
+			System.out.println("Ange år yyyy:");
+			year = Integer.parseInt(input.readLine());
+			if (year < 2018 || year > 2030) {
+				throw new DateOutOfBoundsException("Årtal måste vara mellan 2018-2030");
+			}
+		
+			System.out.println("Ange mån mm:");
+			month = Integer.parseInt(input.readLine());
+			if (month < 1 || month > 12) {
+				throw new DateOutOfBoundsException("Månad måste vara mellan 1-12");
+			}
+		
+			
+			System.out.println("Ange dag dd:");
+			day = Integer.parseInt(input.readLine());
+			if (day < 1 || day > 31) {
+				throw new DateOutOfBoundsException("Dag måste vara mellan 1-31");
+			}
+			
+			//Needs to be able to state openinghours
+			System.out.println("Ange tim hh:");
+			hour = Integer.parseInt(input.readLine());
+			if (hour < 0 || hour > 24) {
+				throw new DateOutOfBoundsException("Timmar måste vara mellan 0-24");
+			}
+				
+			System.out.println("Ange min:");
+			minute = Integer.parseInt(input.readLine());
+			if (minute < 0 || minute > 60) {
+				throw new DateOutOfBoundsException("Minuter måste vara mellan 0-60");
+			}
+			
+			
+			System.out.println("Ange tid i minuter för klippning:");
+			duration = Integer.parseInt(input.readLine());
+			if (duration < 0 || duration > 480) {
+				throw new DateOutOfBoundsException("tid för klippning måste vara mellan 0-480 minuter");
+			}
+				
+			
+		}
+		
+		catch (NumberFormatException e) {
+			myErrHandler.errorHasOccured(e, "Fel i datumformat bokning avbryts");
+			return;
+		}
+		catch (DateOutOfBoundsException e) {
+			myErrHandler.errorHasOccured(e, "Fel i datumsträng bokning avbryts");
+			return;
+		}
+		
 		
 		//Input for employe and customer
+		int empNr = 0;
+		int custNr = 0;
 		System.out.println("Ange Anställdnr:");
-		int empNr = Integer.parseInt(input.readLine());
+		try {
+			empNr = Integer.parseInt(input.readLine());
+			if (myEmpHandler.getEmploye(empNr) == null) {
+				System.out.println("Anställd saknas för angivet anställningsnummer bokningen avbryts");
+				return;
+			}
+		}
+		catch (NumberFormatException e) {
+			myErrHandler.errorHasOccured(e, "Endast siffror tillåtna i anställningsnummer bokningen avbryts");
+			return;
+		}
+		
+		
+	
+		
 		System.out.println("Ange Kundnr:");
-		int custNr = Integer.parseInt(input.readLine());
+		try {
+			custNr = Integer.parseInt(input.readLine());
+			if (myCustHandler.getCustomer(custNr) == null) {
+				System.out.println("Kund saknas för angivet kundnummer bokning avbryts");
+				return;
+			}
+		}
+		catch (NumberFormatException e) {
+			myErrHandler.errorHasOccured(e, "Endast siffror tillåtna i kundnummer bokningen avbryts");
+			return;
+			
+		}
+			
 		
 		
 		
