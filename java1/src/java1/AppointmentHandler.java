@@ -1,6 +1,8 @@
 package java1;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -92,12 +94,131 @@ public class AppointmentHandler {
 	}
 	
 	
-	public void writeAppointmentsToFile() throws IOException {
+	public void saveToFile() {
+			
+			try {
+				FileWriter fw = new FileWriter(new File("C:\\appointments.txt"));
+				for (Appointment currApp : ap) {
+				
+					fw.write(currApp.getEmploye().getEmployeNr() + "," + currApp.getCustomer().getCustNumber() + "," + currApp.getStartTime().getYear() + "," + currApp.getStartTime().getMonthValue()
+					+ "," + currApp.getStartTime().getDayOfMonth() + ","  + currApp.getStartTime().getHour() + "," + currApp.getStartTime().getMinute()
+					+  "," + currApp.getEndTime().getYear() + "," + currApp.getEndTime().getMonthValue() + "," + currApp.getEndTime().getDayOfMonth()   
+					+ "," + currApp.getEndTime().getHour() + "," + currApp.getEndTime().getMinute()+"\n");
+				}
+				fw.close();
+			}
+			catch (IOException e) {
+				ErrorHandler myErrHand = new ErrorHandler();
+				myErrHand.errorHasOccured(e, "Ett fel uppstod vid sparande av Anstdatabas");	
+			}
+	}
+	
+	
+	
+	public void readFromFile(EmployeHandler myEmpHandler, CustomerHandler myCustHandler) throws IOException {
 		
-		FileWriter fw = new FileWriter(new File("appointments.txt"));
-		fw.write(("Hårdkodat input "));
-		fw.close();
 		
+		BufferedReader input = new BufferedReader(new FileReader(new File("C:\\appointments.txt")));
+		
+		int fieldnr = 1;
+		String curStringContent = "";
+		int custNumber = 0;
+		int empNumber = 0;
+		int startYear = 0;
+		int startMonth = 0;
+		int startDay = 0;
+		int startHour = 0;
+		int StartMinute = 0;
+		
+		int endYear = 0;
+		int endMonth =0;
+		int endDay = 0;
+		int endHour = 0;
+		int endMinute = 0;
+		
+		
+		while (input.ready()) {
+			char curChar = (char)input.read();
+			
+			if (curChar != ',') {
+				curStringContent = curStringContent + curChar;
+			}
+			else {
+				
+				if (fieldnr == 1) {
+					empNumber = Integer.parseInt(curStringContent);
+					curStringContent = "";
+				}
+				if (fieldnr == 2) {
+					custNumber = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 3) {
+					startYear = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 4) {
+					startMonth = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				
+				if (fieldnr == 5) {
+					startDay = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if  (fieldnr == 6) {
+					startHour = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 7) {
+					StartMinute = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 8) {
+					endYear = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 9) {
+					endMonth = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 10) {
+					 endDay = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 11) {
+					endHour = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				if (fieldnr == 12) {
+					endMinute = Integer.parseInt(curStringContent);
+					curStringContent = "";	
+				}
+				
+				fieldnr++;
+			}
+			//linechange in file indicates new appointment
+			if (curChar == '\n') {
+				//Removes \n char at the end...
+				endMinute = Integer.parseInt(curStringContent.substring(0, (curStringContent.length()-1)));
+				curStringContent = "";
+				fieldnr = 1;
+			
+				Appointment aApp = new Appointment();
+				Employe aEmp =  myEmpHandler.getEmploye(custNumber);
+				Customer aCust = myCustHandler.getCustomer(custNumber);
+				LocalDateTime startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, StartMinute);
+				LocalDateTime endTime = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+				
+				aApp.setCustomer(aCust);
+				aApp.setEmploye(aEmp);
+				aApp.setStartTime(startTime);
+				aApp.setEndTime(endTime);
+					
+				insertAppointment(aApp);
+				
+			}	
+		}
 	}
 	
 }

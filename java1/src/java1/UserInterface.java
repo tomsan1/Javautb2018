@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 
+import org.json.JSONException;
+
 public class UserInterface {
 	
 	AppointmentHandler myAppHandler = new AppointmentHandler();
@@ -16,18 +18,18 @@ public class UserInterface {
 		System.out.println("-------------Meny-----------");
 		System.out.println("1. Ny bokning ");
 		System.out.println("2. Visa bokningar ");
-		System.out.println("3. Visa dagens bokningar ");
+		System.out.println("3. Hämta data från fil ");
 		System.out.println("4. Skapa ny kund");
 		System.out.println("5. Visa alla kunder");
 		System.out.println("6. Skapa ny anställd");
 		System.out.println("7. Visa alla anställda");
-		System.out.println("8. Visa första lediga anstnr");
+		System.out.println("8. Spara data till fil");
 		System.out.println("9. Avsluta");
 		System.out.println("----------------------------");
 		
 	}
 	
-	public void runMenu() throws NumberFormatException, IOException {
+	public void runMenu() throws NumberFormatException, IOException, JSONException {
 		
 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -50,6 +52,10 @@ public class UserInterface {
 			
 				case 2: myAppHandler.printOutAppointments();
 						break;		
+				case 3: myCustHandler.readFromFile();
+						myEmpHandler.readFromFile();
+						myAppHandler.readFromFile(myEmpHandler, myCustHandler);
+						break;
 				
 				case 4: Customer myCust = createCustomer();
 						myCustHandler.addCustomer(myCust);
@@ -65,7 +71,9 @@ public class UserInterface {
 				case 7: myEmpHandler.printAllEmployes();
 						break;
 						
-				case 8: System.out.println(myEmpHandler.getFirstAvalibleEmpNr());
+				case 8: myCustHandler.saveToFile();
+						myEmpHandler.saveToFile();
+						myAppHandler.saveToFile();
 						break;
 				
 				case 9: System.out.println("Avslutar programmet");

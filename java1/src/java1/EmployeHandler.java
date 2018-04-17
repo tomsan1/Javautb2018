@@ -1,5 +1,10 @@
 package java1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EmployeHandler {
@@ -31,4 +36,69 @@ public class EmployeHandler {
 		//Must take care of this later on will not work forever
 		return eh.size()+1;
 	}
+	public void saveToFile() {
+		
+		
+		try {
+			FileWriter fw = new FileWriter(new File("C:\\employes.txt"));
+			for (Employe currEmp : eh) {
+				
+				fw.write(currEmp.getEmployeNr() + "," + currEmp.getFname() + "," + currEmp.getLName() + "\n");
+				
+			}
+			fw.close();
+		}
+		catch (IOException e) {
+			ErrorHandler myErrHand = new ErrorHandler();
+			myErrHand.errorHasOccured(e, "Ett fel uppstod vid sparande av Anstdatabas");	
+		}
+	}
+	
+	public void readFromFile() throws IOException {
+		
+		
+
+		BufferedReader input = new BufferedReader(new FileReader(new File("C:\\employes.txt")));
+		
+		int fieldnr = 1;
+		String curStringContent = "";
+		int empNumber = 0;
+		String empFname = "";
+		String empLname = "";
+		
+		
+		while (input.ready()) {
+			char curChar = (char)input.read();
+			
+			if (curChar != ',') {
+				curStringContent = curStringContent + curChar;
+			}
+			else {
+				//Assign employenumber
+				if (fieldnr == 1) {
+					empNumber = Integer.parseInt(curStringContent);
+					curStringContent = "";
+				}
+				else if (fieldnr == 2) {
+					empFname = curStringContent;
+					curStringContent = "";	
+				}
+				fieldnr++;
+			}
+			//linechange in file indicates new customer
+			if (curChar == '\n') {
+		
+				empLname = curStringContent.substring(0, (curStringContent.length()-1));
+				curStringContent = "";
+				fieldnr = 1;
+				Employe aEmp = new Employe();
+				aEmp.setEmployeNr(empNumber);
+				aEmp.setFName(empFname);
+				aEmp.setLName(empLname);
+				addEmploye(aEmp);
+				
+			}	
+		}
+	}
+		
 }
