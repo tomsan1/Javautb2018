@@ -18,6 +18,10 @@ public class ShoppingCart extends Storage<Item> {
 				.findFirst()
 				.orElse(null));
 	}
+	public void removeAllItems() {
+		myStorage.clear();
+	}
+	
 	public void printAllInCart() {
 		for (Item cItem : myStorage) {
 			if (cItem != null) {
@@ -35,12 +39,13 @@ public class ShoppingCart extends Storage<Item> {
 		for (Item cItem : myStorage) {
 			totPrice = totPrice + cItem.getPrice();
 			receipt = receipt +  "Artikel:"+ cItem.getDecription() + " pris:" + cItem.getPrice() + "\n";
+			
 		}
+		removeAllItems();
 		
-		
+		System.out.println("-------------------------");
 		System.out.println(receipt);
 		System.out.println("Att betala:" + totPrice);
+		System.out.println("-------------------------");
 	}
-	
-
 }

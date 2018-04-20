@@ -19,16 +19,11 @@ public class UserInterface {
 		System.out.println("5. ta bort artikel från kundkorg och lägg till lager");  
 		System.out.println("6. Sök efter artikel på lager");
 		System.out.println("7. Checka ut kundkorg");
-		System.out.println("----------------------------");  
-		
-		
+		System.out.println("----------------------------");  	
 	}  
 	
 	public void runMenu() throws NumberFormatException, IOException {  
 		 		 		  
-		
-		 		 		
-		 		 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));  
 		
 		boolean runMenu = true;  
@@ -70,32 +65,72 @@ public class UserInterface {
 		 		case 7: System.out.println("val 7");
 		 				myShoppingCart.checkOut();
 		 		}  
-		 	}  
-		}  
+		 }  
+	}  
 
 	public Item createItem() throws IOException {
 		
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
-		System.out.println("Ange artnr:");
-		int artNo = Integer.parseInt(ir.readLine());
-		System.out.println("Ange pris:");
-		int price = Integer.parseInt(ir.readLine());
-		System.out.println("Ange beskrivning");
-		String d = ir.readLine(); 
 		
+		int artNo = 0;
+		int price = 0;
+		String d = "";
+		
+		while (artNo == 0 || price == 0) {
+			System.out.println("Ange artnr:");
+			try{
+				artNo = Integer.parseInt(ir.readLine());
+			}
+			catch (NumberFormatException e){
+				System.out.println("Endast siffror i artnr");
+				
+				continue;
+			}
+			System.out.println("Ange pris:");
+			try{
+				price = Integer.parseInt(ir.readLine());
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Endast siffror i pris");
+				
+				continue;
+			}
+			System.out.println("Ange beskrivning");
+			d = ir.readLine();
+		}	
 		return new Item(artNo, price, d);
 	}
+	
 	public void addToCartFromStorage() throws NumberFormatException, IOException {
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
 		System.out.println("Ange artnr:");
-		int artNr = Integer.parseInt(ir.readLine());
+		int artNr = 0;
+		
+		try {
+			artNr = Integer.parseInt(ir.readLine());
+			
+		}
+		catch (NumberFormatException e) {
+			System.out.println("Endast siffror i artnr");
+			return;
+		}
 		myShoppingCart.addItem(myItemStorage.getItem(artNr));
 	}
 	
 	public void removeFromCartToStorage() throws NumberFormatException, IOException {
+		
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
 		System.out.println("Ange artnr:");
-		int artNr = Integer.parseInt(ir.readLine());
+		int artNr = 0;
+		
+		try {
+			artNr = Integer.parseInt(ir.readLine());
+		}
+		catch (NumberFormatException e){
+			System.out.println("Endast siffror i artnr");
+			return;
+		}
+		
 		myShoppingCart.addItem(myItemStorage.getItem(artNr));
 		myItemStorage.addItem(myShoppingCart.getItem(artNr));
 	}
@@ -103,7 +138,16 @@ public class UserInterface {
 	public void findItem() throws NumberFormatException, IOException {
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
 		System.out.println("Ange artnr:");
-		if (myItemStorage.isAvalible(Integer.parseInt(ir.readLine()))){
+		int artN = 0; 
+		try {
+			artN =Integer.parseInt(ir.readLine());
+			
+		}
+		catch (NumberFormatException e) {
+			System.out.println("endast siffror i artnr");
+			return;
+		}
+		if (myItemStorage.isAvalible(artN)){
 			System.out.println("Finns i lager");
 		}
 		else {
