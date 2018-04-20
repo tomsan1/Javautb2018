@@ -3,23 +3,11 @@ package java1;
 public class ShoppingCart extends Storage<Item> {
 	
 	public Item getItem(int artNr){
-		
-		Item iToreturn = myStorage.stream()
-				.filter(item -> item.getArtNr() == (artNr))
-				.findFirst()
-				.orElse(null);
-		removeItem(artNr);
-		return iToreturn;
+	
 	}
 	
 	public void removeItem(int artNr) {
-		myStorage.remove(myStorage.stream()
-				.filter(item -> item.getArtNr() == (artNr))
-				.findFirst()
-				.orElse(null));
-	}
-	public void removeAllItems() {
-		myStorage.clear();
+		
 	}
 	
 	public void printAllInCart() {
@@ -33,19 +21,5 @@ public class ShoppingCart extends Storage<Item> {
 	}
 	
 	public void checkOut() {
-		int totPrice = 0;
-		String receipt = "";
-		
-		for (Item cItem : myStorage) {
-			totPrice = totPrice + cItem.getPrice();
-			receipt = receipt +  "Artikel:"+ cItem.getDecription() + " pris:" + cItem.getPrice() + "\n";
-			
-		}
-		removeAllItems();
-		
-		System.out.println("-------------------------");
-		System.out.println(receipt);
-		System.out.println("Att betala:" + totPrice);
-		System.out.println("-------------------------");
 	}
 }

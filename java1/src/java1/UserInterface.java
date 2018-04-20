@@ -8,17 +8,20 @@ public class UserInterface {
 	
 	
 	ItemStorage myItemStorage = new ItemStorage();
+	ItemStorage myItemIndex = new ItemStorage();
 	ShoppingCart myShoppingCart = new ShoppingCart();
+	
 	
 	public void printMenu() {  
 		System.out.println("-------------Meny-----------");  
-		System.out.println("1. Lägg in artikel i lagret");  
-		System.out.println("2. Visa alla artiklar i lagret");  
-		System.out.println("3. Visa alla artiklar i kundkorg");  
-		System.out.println("4. lägg till artikel i kundkorg från lager");  
-		System.out.println("5. ta bort artikel från kundkorg och lägg till lager");  
-		System.out.println("6. Sök efter artikel på lager");
-		System.out.println("7. Checka ut kundkorg");
+		System.out.println("1. Skapa Artikel");  
+		System.out.println("2. Visa alla artiklar");  
+		System.out.println("3. Lägg till artikel i lager");  
+		System.out.println("4. Visa alla artiklar i lager");  
+		System.out.println("5. Lägg in artikel i varukorg");
+		System.out.println("6. Visa alla artiklar i varukorg");
+		System.out.println("6. Ta bort artikel från varukorg");
+		System.out.println("7. Checka ut varukorg");
 		System.out.println("----------------------------");  	
 	}  
 	
@@ -39,21 +42,21 @@ public class UserInterface {
 				continue;  
 			}  
 			switch (menuChoice) {  
-				case 1: System.out.println("lägg in artikel i lager"); 
+				case 1: System.out.println("Skapa artikel"); 
 						Item i1 = createItem();
-						myItemStorage.addItem(i1);
+						myItemIndex.addItem(i1);
 						break;
 			
-				case 2: System.out.println("artiklar i lager");
-						myItemStorage.printAllStorage();
+				case 2: System.out.println("Visa alla artiklar");
+						myItemIndex.printAll();
 		 				break;	
 		 		 				
-		 		case 3: System.out.println("artiklar i kundkorg"); 
-		 				myShoppingCart.printAllInCart();
+		 		case 3: System.out.println("Fyll på lager"); 
+		 				addItemsToStorage();
 		 				break;  
 		 		 				  
-		 		case 4: System.out.println("lägg artikel i kundkorg från lager");
-		 				addToCartFromStorage();
+		 		case 4: System.out.println("Visa alla artiklar i lager");
+		 				myItemStorage.printAllItemsInStorage();
 		 				break;  
 		 		 				  
 		 		case 5: System.out.println("tag bort artikel från kundkorg och lägg i lager");  
@@ -84,6 +87,10 @@ public class UserInterface {
 			catch (NumberFormatException e){
 				System.out.println("Endast siffror i artnr");
 				
+			}
+			if (! myItemIndex.artNoAvalible(artNo)) {
+				artNo = 0;
+				System.out.println("Artikelnummer finns redan");
 				continue;
 			}
 			System.out.println("Ange pris:");
@@ -92,13 +99,42 @@ public class UserInterface {
 			}
 			catch (NumberFormatException e) {
 				System.out.println("Endast siffror i pris");
-				
 				continue;
 			}
 			System.out.println("Ange beskrivning");
 			d = ir.readLine();
 		}	
-		return new Item(artNo, price, d);
+		return new Item(artNo, price, d, 0);
+	}
+
+	public void addItemsToStorage() throws IOException {
+		
+		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
+		System.out.println("Ange artnr:");
+		int artNr = 0;
+		int noToAdd =0;
+		try {
+			artNr = Integer.parseInt(ir.readLine());	
+		}
+		catch (NumberFormatException e) {
+			System.out.println("Endast siffror i artnr");
+			return;
+		}
+		try {
+			System.out.println("Antal att lägga till i lager");
+			noToAdd = Integer.parseInt(ir.readLine());
+		}
+		catch (NumberFormatException e) {
+			System.out.println("Endast siffror i artnr");
+			return;
+		}
+		if (myItemIndex.isAvalible(artNr)) {
+			System.out.println("Lägger till Artnr:" + artNr + " Antal:" + noToAdd);
+			myItemStorage.addItems(artNr, noToAdd);
+			
+			
+		}
+		
 	}
 	
 	public void addToCartFromStorage() throws NumberFormatException, IOException {

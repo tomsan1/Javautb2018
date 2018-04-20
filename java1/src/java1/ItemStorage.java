@@ -2,28 +2,16 @@ package java1;
 
 public class ItemStorage extends Storage<Item> {
 
-	public Item getItem(int artNr){
-		
-		Item iToreturn = myStorage.stream()
-				.filter(item -> item.getArtNr() == (artNr))
-				.findFirst()
-				.orElse(null);
-				removeItem(artNr);
-		return iToreturn;
-		
-	}
+	
 	public void removeItem(int artNr) {
-		myStorage.remove(myStorage.stream()
-				.filter(item -> item.getArtNr() == (artNr))
-				.findFirst()
-				.orElse(null));
+		
 	}
-	public void printAllStorage() {
+	public void printAllItemsInStorage() {
+		System.out.println("-----------------------------");
 		for (Item cItem : myStorage) {
-			System.out.println("------------------");
-			System.out.println(cItem.toString());
-			System.out.println("------------------");
+			System.out.println("Artikelnummer:" + cItem.getArtNr() + " Beskrivning:" + cItem.getDecription() + " Antal:" + cItem.getQty());
 		}
+		System.out.println("-----------------------------");
 	}
 	public boolean isAvalible(int artnr) {
 		for (Item cItem : myStorage) {
@@ -31,5 +19,21 @@ public class ItemStorage extends Storage<Item> {
 				return true; 
 		}
 		return false;
+	}
+	public boolean artNoAvalible(int artnr) {
+		for (Item cItem : myStorage) {
+			if (cItem.getArtNr() == artnr) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public void addItems(int artN, int noToAdd) {
+		for (Item cItem : myStorage) {
+			if (cItem.getArtNr() == artN) {
+				System.out.println("lägger till WEWRW");
+				cItem.setArtNr(5);
+			}
+		}
 	}
 }
