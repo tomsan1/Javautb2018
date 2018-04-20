@@ -39,30 +39,30 @@ public class UserInterface {
 				continue;  
 			}  
 			switch (menuChoice) {  
-				case 1: System.out.println("val 1"); 
+				case 1: System.out.println("lägg in artikel i lager"); 
 						Item i1 = createItem();
 						myItemStorage.addItem(i1);
 						break;
 			
-				case 2: System.out.println("val 2");
+				case 2: System.out.println("artiklar i lager");
 						myItemStorage.printAllStorage();
 		 				break;	
 		 		 				
-		 		case 3: System.out.println("val 3"); 
+		 		case 3: System.out.println("artiklar i kundkorg"); 
 		 				myShoppingCart.printAllInCart();
 		 				break;  
 		 		 				  
-		 		case 4: System.out.println("val 4");
+		 		case 4: System.out.println("lägg artikel i kundkorg från lager");
 		 				addToCartFromStorage();
 		 				break;  
 		 		 				  
-		 		case 5: System.out.println("val 5");  
+		 		case 5: System.out.println("tag bort artikel från kundkorg och lägg i lager");  
 		 				removeFromCartToStorage();
 		 				break; 
-		 		case 6: System.out.println("val 6");
+		 		case 6: System.out.println("Sök efter artikel");
 		 				findItem();
 		 				break;
-		 		case 7: System.out.println("val 7");
+		 		case 7: System.out.println("Checka ut kundkorg");
 		 				myShoppingCart.checkOut();
 		 		}  
 		 }  
@@ -114,7 +114,19 @@ public class UserInterface {
 			System.out.println("Endast siffror i artnr");
 			return;
 		}
-		myShoppingCart.addItem(myItemStorage.getItem(artNr));
+		if (artNr != 0) {
+			
+			Item fetchedItem = myItemStorage.getItem(artNr);
+			if (fetchedItem != null) {
+				myShoppingCart.addItem(fetchedItem);
+			}
+			else {
+				System.out.println("Ingen artikel lades till i varukorgen");
+			}
+		}
+		else {
+			System.out.println("Ingen artikel lades till i varukorgen");
+		}
 	}
 	
 	public void removeFromCartToStorage() throws NumberFormatException, IOException {
@@ -131,8 +143,17 @@ public class UserInterface {
 			return;
 		}
 		
-		myShoppingCart.addItem(myItemStorage.getItem(artNr));
-		myItemStorage.addItem(myShoppingCart.getItem(artNr));
+		if (artNr != 0) {
+			Item fetchedItem = myShoppingCart.getItem(artNr);
+			if (fetchedItem != null) {
+				myItemStorage.addItem(fetchedItem);
+			}
+			else {
+				System.out.println("Inget Item flyttades från varukorgen");
+			}
+		}
+		
+		
 	}
 	
 	public void findItem() throws NumberFormatException, IOException {
@@ -149,6 +170,7 @@ public class UserInterface {
 		}
 		if (myItemStorage.isAvalible(artN)){
 			System.out.println("Finns i lager");
+			System.out.println(myItemStorage.getItem(artN).toString());
 		}
 		else {
 			System.out.println("Finns ej i lager");
