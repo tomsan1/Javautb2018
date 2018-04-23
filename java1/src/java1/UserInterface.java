@@ -95,6 +95,7 @@ public class UserInterface {
 		int hour = 0;
 		int minute = 0;
 		int duration = 0;
+		int estPrice = 0;
 		
 		try {
 			System.out.println("Ange år yyyy:");
@@ -134,6 +135,12 @@ public class UserInterface {
 			duration = Integer.parseInt(input.readLine());
 			if (duration < 0 || duration > 480) {
 				throw new DateOutOfBoundsException("tid för klippning måste vara mellan 0-480 minuter");
+			}
+			System.out.println("Ange uppskattat pris:");
+			
+			estPrice = Integer.parseInt(input.readLine());
+			if (duration < 0 || duration > 5000) {
+				throw new DateOutOfBoundsException("Maxpris för klippning 5000:-");
 			}
 				
 			
@@ -194,7 +201,7 @@ public class UserInterface {
 		
 		myApp.setStartTime(LocalDateTime.of(year, month, day, hour, minute));
 		myApp.setEndTime(LocalDateTime.of(year, month, day, hour, minute).plusMinutes(duration));
-		
+		myApp.setEstPrice(estPrice);
 		
 		boolean result = myAppHandler.insertAppointment(myApp);
 		if (result) {

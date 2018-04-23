@@ -22,6 +22,7 @@ public class AppointmentHandler {
 			System.out.println("Frisör:" + currentAppointment.employe.getFname() + " " + currentAppointment.employe.getLName());
 			System.out.println("Start:" + currentAppointment.getStartTime().toString());
 			System.out.println("Slut:" + currentAppointment.getEndTime().toString());
+			System.out.println("Uppskattat pris:" + currentAppointment.getEstPrice());
 			System.out.println("---------------------------------");	
 		}		
 	}

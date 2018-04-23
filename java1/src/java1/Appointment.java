@@ -8,6 +8,7 @@ public class Appointment {
 	Customer customer;
 	
 	String description;
+	int estPrice;
 	LocalDateTime startTime;
 	LocalDateTime endTime;
 	
@@ -61,6 +62,12 @@ public class Appointment {
 	}
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
+	}
+	public void setEstPrice(int ePrice) {
+		this.estPrice = ePrice;
+	}
+	public int getEstPrice() {
+		return this.estPrice;
 	}
 	
 	public int getDurationAsMinutes() {
