@@ -8,7 +8,6 @@ public class UserInterface {
 	
 	
 	ItemStorage myItemStorage = new ItemStorage();
-	ItemStorage myItemIndex = new ItemStorage();
 	ShoppingCart myShoppingCart = new ShoppingCart();
 	
 	
@@ -20,8 +19,9 @@ public class UserInterface {
 		System.out.println("4. Visa alla artiklar i lager");  
 		System.out.println("5. Lägg in artikel i varukorg");
 		System.out.println("6. Visa alla artiklar i varukorg");
-		System.out.println("6. Ta bort artikel från varukorg");
-		System.out.println("7. Checka ut varukorg");
+		System.out.println("7. Ta bort artikel från varukorg");
+		System.out.println("8. Checka ut varukorg");
+		System.out.println("9. Sök artikel i lager");
 		System.out.println("----------------------------");  	
 	}  
 	
@@ -44,11 +44,11 @@ public class UserInterface {
 			switch (menuChoice) {  
 				case 1: System.out.println("Skapa artikel"); 
 						Item i1 = createItem();
-						myItemIndex.addItem(i1);
+						myItemStorage.addItem(i1);
 						break;
 			
 				case 2: System.out.println("Visa alla artiklar");
-						myItemIndex.printAll();
+						myItemStorage.printAll();
 		 				break;	
 		 		 				
 		 		case 3: System.out.println("Fyll på lager"); 
@@ -59,14 +59,22 @@ public class UserInterface {
 		 				myItemStorage.printAllItemsInStorage();
 		 				break;  
 		 		 				  
-		 		case 5: System.out.println("tag bort artikel från kundkorg och lägg i lager");  
-		 				removeFromCartToStorage();
+		 		case 5: System.out.println("Lägg artikel från lager till varukorg");  
+		 				addToCartFromStorage();
+		 				
 		 				break; 
-		 		case 6: System.out.println("Sök efter artikel");
-		 				findItem();
+		 		case 6: System.out.println("Visa alla artiklar i varukorg");
+		 				myShoppingCart.printAllInCart();
 		 				break;
-		 		case 7: System.out.println("Checka ut kundkorg");
-		 				myShoppingCart.checkOut();
+		 		case 7: System.out.println("Ta bort artikel ur varukorg");
+		 				removeFromCartToStorage();
+		 				break;
+		 		case 8: System.out.println("Kassa");
+ 						myShoppingCart.checkOut();
+ 						break;
+		 		case 9: System.out.println("Sök artikel i lager");
+ 						findItem();
+ 						break;
 		 		}  
 		 }  
 	}  
@@ -88,7 +96,7 @@ public class UserInterface {
 				System.out.println("Endast siffror i artnr");
 				
 			}
-			if (! myItemIndex.artNoAvalible(artNo)) {
+			if (! myItemStorage.artNoAvalible(artNo)) {
 				artNo = 0;
 				System.out.println("Artikelnummer finns redan");
 				continue;
@@ -128,10 +136,12 @@ public class UserInterface {
 			System.out.println("Endast siffror i artnr");
 			return;
 		}
-		if (myItemIndex.isAvalible(artNr)) {
+		if (myItemStorage.isAvalible(artNr)) {
 			System.out.println("Lägger till Artnr:" + artNr + " Antal:" + noToAdd);
-			myItemStorage.addItems(artNr, noToAdd);
-			
+			myItemStorage.addItems(artNr, noToAdd);	
+		}
+		else {
+			System.out.println("Artikel saknas");
 			
 		}
 		
@@ -141,6 +151,7 @@ public class UserInterface {
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
 		System.out.println("Ange artnr:");
 		int artNr = 0;
+		int noToAdd = 0;
 		
 		try {
 			artNr = Integer.parseInt(ir.readLine());
@@ -150,19 +161,43 @@ public class UserInterface {
 			System.out.println("Endast siffror i artnr");
 			return;
 		}
+		
+		System.out.println("Ange antal:");
+		try {
+			
+			 noToAdd = Integer.parseInt(ir.readLine());
+				
+		}
+		catch (NumberFormatException e) {
+			System.out.println("Endast siffror i artnr");
+			return;
+		}
+		
 		if (artNr != 0) {
 			
-			Item fetchedItem = myItemStorage.getItem(artNr);
-			if (fetchedItem != null) {
-				myShoppingCart.addItem(fetchedItem);
+			if (myItemStorage.isAvalible(artNr)) {
+				// go ahead
+				System.out.println("artNr i ifsats:" + artNr + "noToadd i ifsats" + noToAdd);
+				if (myItemStorage.isInStock(artNr, noToAdd)) {
+				
+					if (myShoppingCart.allreadyInCart(artNr)) {
+						myItemStorage.removeItems(artNr, noToAdd);
+						myShoppingCart.addItemsToCart(artNr, noToAdd);
+					}
+					else {
+						Item itemToAdd = new Item(myItemStorage.getItem(artNr).getArtNr(), myItemStorage.getItem(artNr).getPrice(), myItemStorage.getItem(artNr).getDecription(), noToAdd);
+						myShoppingCart.addItem(itemToAdd);
+						myItemStorage.removeItems(artNr, noToAdd);
+					}
+				}
+				else {
+					System.out.println("Lagersaldo för lågt");
+				}
 			}
 			else {
-				System.out.println("Ingen artikel lades till i varukorgen");
-			}
-		}
-		else {
-			System.out.println("Ingen artikel lades till i varukorgen");
-		}
+				System.out.println("Artikelnumer saknas i lager");
+			}	
+		}		
 	}
 	
 	public void removeFromCartToStorage() throws NumberFormatException, IOException {
@@ -170,6 +205,7 @@ public class UserInterface {
 		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));  
 		System.out.println("Ange artnr:");
 		int artNr = 0;
+		int noToRemove = 0;
 		
 		try {
 			artNr = Integer.parseInt(ir.readLine());
@@ -179,17 +215,30 @@ public class UserInterface {
 			return;
 		}
 		
-		if (artNr != 0) {
-			Item fetchedItem = myShoppingCart.getItem(artNr);
-			if (fetchedItem != null) {
-				myItemStorage.addItem(fetchedItem);
-			}
-			else {
-				System.out.println("Inget Item flyttades från varukorgen");
-			}
+		System.out.println("Ange antal att ta bort:");
+		try {
+			noToRemove = Integer.parseInt(ir.readLine());
+		}
+		catch (NumberFormatException e){
+			System.out.println("Endast siffror");
+			return;
 		}
 		
-		
+		if (artNr != 0) {	
+			if (myShoppingCart.isAvalible(artNr)) {
+				// go ahead
+				if (myShoppingCart.isInStock(artNr, noToRemove)) {
+					myShoppingCart.removeItemsFromCart(artNr, noToRemove);
+					myItemStorage.addItems(artNr, noToRemove);			
+				}
+				else {
+					System.out.println("Antal finns ej i kundkorg");
+				}
+			}
+			else {
+				System.out.println("Artikelnumer saknas i kundkorg");
+			}
+		}
 	}
 	
 	public void findItem() throws NumberFormatException, IOException {
@@ -206,12 +255,11 @@ public class UserInterface {
 		}
 		if (myItemStorage.isAvalible(artN)){
 			System.out.println("Finns i lager");
-			System.out.println(myItemStorage.getItem(artN).toString());
+			System.out.println(myItemStorage.getItem(artN).toString() + myItemStorage.getItem(artN).getQty());
 		}
 		else {
 			System.out.println("Finns ej i lager");
 		}
-		
 	}
 	
 }
