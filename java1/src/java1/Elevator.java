@@ -207,6 +207,14 @@ public class Elevator {
 	
 	public void run() {
 		while(true) {
+			
+			moveElevator();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//Never end mainThread/Always be able to make decisions
 			//Move elevator if request exist
 			//Notify people where the elevator is and what the state of the doors are
