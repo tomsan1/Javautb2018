@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 
-import org.json.JSONException;
 
 public class UserInterface {
 	
@@ -29,7 +28,7 @@ public class UserInterface {
 		
 	}
 	
-	public void runMenu() throws NumberFormatException, IOException, JSONException {
+	public void runMenu() throws NumberFormatException, IOException {
 		
 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
