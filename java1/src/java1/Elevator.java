@@ -3,7 +3,7 @@ package java1;
 import java.util.ArrayList;
 
 
-public class Elevator {
+public class Elevator implements Runnable {
 	private int topFloor;
 	private int bottomFloor;
 	private int curFloor;
@@ -16,7 +16,7 @@ public class Elevator {
 		//Create new elevator and put it on bottomfloor and close door.
 		this.topFloor = topF;
 		this.bottomFloor = bottomF;
-		this.curFloor = this.bottomFloor;
+		this.curFloor = this.topFloor;
 		doorClosed = true;
 		goingUp = true;
 		this.buttonsPushed = new ArrayList<>();
@@ -59,9 +59,6 @@ public class Elevator {
 			this.doorClosed = true;
 			System.out.println("Dörren stängd");
 		}
-		else {
-			System.out.println("Du försöker stänga en redan stängd dörr har du inget bättre för dig....");
-		}
 	}
 	public boolean isDoorOpen() {
 		if (doorClosed) {
@@ -82,20 +79,26 @@ public class Elevator {
 	}
 	
 	public void moveElevator() {
+		
 		while (buttonsPushed.size() > 0) {
 			
 			// get the highest and lowest floor pushed
 			int high = curFloor;
 			int low = curFloor;
 			
-			for (Integer cBp : buttonsPushed) {
-				if (cBp.intValue() > high) {
-					high = cBp.intValue();
-				}
-				if (cBp.intValue() < low) {
-					low = cBp.intValue();
+			synchronized(buttonsPushed) {
+				for (Integer cBp : buttonsPushed) {
+				
+					if (cBp.intValue() > high) {
+						high = cBp.intValue();
+					
+					}
+					if (cBp.intValue() < low) {
+						low = cBp.intValue();
+					}
 				}
 			}
+			
 			// what way to go? up or down?
 			if(goingUp) {
 				// have we reached the topfloor or is the highest requested floor reached?
@@ -138,13 +141,14 @@ public class Elevator {
 			passingFloor();
 		}
 		else {
-			System.out.println("Dörrfan är ju inte stängd den här hissen rör sig inte ur fläcken...");
+			closeDoor();
 		}	
 	}
 	
 	
 	
 	private void moveDownOneFloor()  {
+		
 		if (doorClosed) {
 			System.out.println("Åker från våning:" + curFloor + " på väg ner");
 			try {
@@ -155,62 +159,66 @@ public class Elevator {
 			}
 			curFloor = curFloor - 1;
 			System.out.println("Kommer till våning" + curFloor + " på väg ner");
-			passingFloor();
+			checkingFloor();
 			
 		}
 		else {
-			System.out.println("Dörrfan är ju inte stängd den här hissen rör sig inte ur fläcken...");
+			closeDoor();
 		}
 		
 	}
-	public void enterElevator(Person p) {
-		//check for maxweigh
-		if (! doorClosed) {
-			System.out.println(p.getName() + " kliver på hissen");
-			persons.add(p);
-		}
-		else {
-			System.out.println(p.getName() + " försöker kliva på hissen när dörren är stängd.....");
-		}
-	}
+	/*public void enterElevator(Person p) {
+		//this.openDoor();
+		//persons.add(p);
+		//System.out.println(p.getName() + " går in i hissen");
+		//this.closeDoor();
+	}*/
 	
-	private void passingFloor() {
+	private void checkingFloor()  {
 		// check if button is pushed for this floor
 		// is the elevator supposed to stop at this floor?
 		
-		
-		for (Person cP : persons) {
-			if (cP.getDesieredFloor() == curFloor) {
-				//stop elevator and remove this cp
-				
-				System.out.println("Stannar på våning:" + curFloor);
-				openDoor();
-				System.out.println(cP.getName() + " kliver av på våning:" + curFloor);
-				
-				closeDoor();
-			}
-		}
 		for (Integer cBp : buttonsPushed) {
 			if (cBp.intValue() == curFloor){
+				
 				//Stop elevator and remove this cBp
-				System.out.println("Stannar på våning:" + curFloor);
-				buttonsPushed.remove(cBp);
-				return;
+				synchronized(buttonsPushed) {
+					buttonsPushed.remove(cBp);
+				}
+				
+				System.out.print("Stannar på våning:" + curFloor);
+				try {
+					for (int i = 0; i < 7 ; i++) {
+						System.out.print(".");
+						Thread.sleep(200);
+					}
+					
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 			}
 		}
 		
 	}
 	
 	public void pushButton(Integer i) {
-		buttonsPushed.add(i);
+		synchronized(buttonsPushed) {
+			buttonsPushed.add(i);
+		}
 	}
-	
+	@Override
 	public void run() {
 		while(true) {
-			
+			for (Integer cbp : buttonsPushed) {
+				System.out.println("Våningar som hissen skall till: " + cbp.intValue());
+			}
 			moveElevator();
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
