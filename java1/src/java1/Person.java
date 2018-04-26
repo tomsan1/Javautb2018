@@ -36,24 +36,18 @@ public class Person implements Runnable {
 		return this.currentFloor;
 	}
 	public void enterElevator() {
-		
-		//myElevator.enterElevator(this);
-		System.out.println(this.getName() + " går in i hissen som är på våning: " + myElevator.getCurFloor() );
-		this.isInElevator = true;
-		System.out.println(this.getName() + " trycker på knappen för våning:" + this.desieredFloor);
-		myElevator.pushButton((Integer)this.desieredFloor);
+		if (myElevator.isDoorOpen()) {
+			System.out.println(this.getName() + " går in i hissen");
+			this.isInElevator = true;
+			System.out.println(this.getName() + " trycker på knappen för våning:" + this.desieredFloor);
+			myElevator.pushButton((Integer)this.desieredFloor);
+		}
 	}
 	public void exitElevator() {
-		this.isInElevator = false;
-		this.currentFloor = this.getDesieredFloor();
-		System.out.println("------------------------------------");
-		System.out.println(this.getName() + " kliver av hissen");
-		System.out.println("------------------------------------");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (myElevator.isDoorOpen()) {
+			this.isInElevator = false;
+			this.currentFloor = this.getDesieredFloor();
+			System.out.print(this.getName() + " kliver av hissen");
 		}
 	}
 	
@@ -69,59 +63,51 @@ public class Person implements Runnable {
 				// am i on the floor that i want to be?
 				if (desieredFloor != currentFloor) { // i am on the wrong floor....
 					
-					//check if elevator is at this floor
+					//check if elevator is at this floor and get into the elevator...
 					if (myElevator.getCurFloor() == this.getCurrentFloor() && ! this.isInElevator) {
 						enterElevator();
 					}
 					else {
 						Thread.sleep(100);
 						if (! this.isInElevator) {
-							System.out.println(this.getName() + " väntar på hissen på våning: " + this.getCurrentFloor() + " för att åka till våning:" + this.getDesieredFloor() );
 							
+							//Put code here to check what persons that are waiting for elevator		
 						}
 					}
+					// Person is on the desiered floor get out of elevator...
 					if ((myElevator.getCurFloor() == this.getDesieredFloor() &&  this.isInElevator)) {
 						exitElevator();
 					}
-					
 				}
 				else {
-							
 					//get random decision if i want to go for elevatorride
-				
-					Thread.sleep(2000);
-					// do i want to go to a diffrent floor? 
+					Thread.sleep(8000);
+					// do i want to go to a different floor? 
 					boolean wantToGoToAnotherFloor = myRandGen.nextBoolean();
 					if (wantToGoToAnotherFloor) {
-						
-						
 						// Hardcoded number of floors (5) needs to be fixed
 						while (this.desieredFloor == this.currentFloor ) {
-							desieredFloor = myRandGen.nextInt(5);
+							desieredFloor = myRandGen.nextInt(myElevator.getNoOfFloors());
 						}
-						System.out.println(this.getName() + " har bestämt sig för att åka till våning:" + this.desieredFloor);
 						// get random desieredfloor
-						// pushbutton to get elevator to this floor
-						System.out.println(this.getName() + " trycker på knappen för att få hissen till våning:" + this.currentFloor);
+						// pushbutton to get elevator to this floor or get in if it is allready here.
 						if (myElevator.getCurFloor() == this.getCurrentFloor()) {
 							enterElevator();
 							myElevator.pushButton(this.getDesieredFloor());
 						}
 						else {
-							System.out.println(this.getName() + " trycker på knappen för att få hissen till våning:" + this.currentFloor);
+							// check that pushButton does not contain this floor already....
+							myElevator.removePushedButtons(this.currentFloor);
 							myElevator.pushButton(this.currentFloor);
 						}
-							
 					}
 				}
 				
-				Thread.sleep(6000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
-		
 	}
 }
