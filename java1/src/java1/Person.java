@@ -40,7 +40,10 @@ public class Person implements Runnable {
 			System.out.println(this.getName() + " går in i hissen");
 			this.isInElevator = true;
 			System.out.println(this.getName() + " trycker på knappen för våning:" + this.desieredFloor);
-			myElevator.pushButton((Integer)this.desieredFloor);
+			synchronized(myElevator) {
+				myElevator.pushButton((Integer)this.desieredFloor);
+			}
+			
 		}
 	}
 	public void exitElevator() {
@@ -68,7 +71,7 @@ public class Person implements Runnable {
 						enterElevator();
 					}
 					else {
-						Thread.sleep(100);
+						//Thread.sleep(100);
 						if (! this.isInElevator) {
 							
 							//Put code here to check what persons that are waiting for elevator		
@@ -97,13 +100,16 @@ public class Person implements Runnable {
 						}
 						else {
 							// check that pushButton does not contain this floor already....
-							myElevator.removePushedButtons(this.currentFloor);
-							myElevator.pushButton(this.currentFloor);
+							synchronized(myElevator) {
+								myElevator.removePushedButtons(this.currentFloor);
+								myElevator.pushButton(this.currentFloor);
+							}
+							
 						}
 					}
 				}
 				
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -14,7 +14,7 @@ public class Elevator implements Runnable {
 	private boolean doorClosed;
 	private boolean goingUp;
 	private List<Integer> buttonsPushed;
-	private List<Person> persons;
+	
 	
 	public Elevator (int topF, int bottomF) {
 		//Create new elevator and put it on bottomfloor and close door.
@@ -24,7 +24,7 @@ public class Elevator implements Runnable {
 		doorClosed = true;
 		goingUp = true;
 		this.buttonsPushed = new ArrayList<>();
-		this.persons = new ArrayList<Person>();
+		
 	}
 	
 	public int getNoOfFloors() {
@@ -36,7 +36,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren öppnas.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(500);
+					Thread.sleep(5);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -53,7 +53,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren stängs.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(500);
+					Thread.sleep(5);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -84,7 +84,13 @@ public class Elevator implements Runnable {
 	
 	public void moveElevator() {
 		
-		while (buttonsPushed.size() > 0) {
+		int bpListSize;
+		synchronized(buttonsPushed) {
+			bpListSize = buttonsPushed.size();
+		}
+		
+		
+		if (bpListSize > 0) {
 			// get the highest and lowest floor pushed
 			int high = curFloor;
 			int low = curFloor;
@@ -92,13 +98,23 @@ public class Elevator implements Runnable {
 			synchronized(buttonsPushed) {
 				for (Integer cBp : buttonsPushed) {
 					if (cBp.intValue() > high) {
-						high = cBp.intValue();
+						
+							high = cBp.intValue();
+							bpListSize = buttonsPushed.size();
+						
+								
 					}
 					if (cBp.intValue() < low) {
-						low = cBp.intValue();
+						
+					
+							low = cBp.intValue();
+							bpListSize = buttonsPushed.size();
+					}
+						
 					}
 				}
-			}
+			
+			
 			// what way to go? up or down?
 			if(goingUp) {
 				// have we reached the topfloor or is the highest requested floor reached?
@@ -127,7 +143,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(500);
+					Thread.sleep(5);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -150,7 +166,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(500);
+					Thread.sleep(5);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -182,7 +198,7 @@ public class Elevator implements Runnable {
 						System.out.print("Väntar.");
 						for (int i = 0; i < 7 ; i++) {
 							System.out.print(".");
-							Thread.sleep(200);
+							Thread.sleep(2);
 						}
 						System.out.println("");
 					} catch (InterruptedException e) {
@@ -190,12 +206,15 @@ public class Elevator implements Runnable {
 						e.printStackTrace();
 					}	
 					closeDoor();
+					//remove current floor from buttonsPushed if elevator has stopped...
+					if (haveStoppedOnThisFloor) {
+						removePushedButtons(curFloor);
+						return;
+					}
 				}
 			}
-			//remove current floor from buttonsPushed if elevator has stopped...
-			if (haveStoppedOnThisFloor) {
-				removePushedButtons(curFloor); 
-			}
+			
+			
 		}
 	}
 	
@@ -215,7 +234,7 @@ public class Elevator implements Runnable {
 		while(true) {
 			moveElevator();
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
