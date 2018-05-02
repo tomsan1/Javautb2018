@@ -66,7 +66,7 @@ public class Program {
 		
 		
 		elevThread.start();
-		myUi.run();
+		//myUi.run();
 		
 	}
 }

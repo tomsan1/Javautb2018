@@ -84,7 +84,7 @@ public class Person implements Runnable {
 				}
 				else {
 					//get random decision if i want to go for elevatorride
-					Thread.sleep(8000);
+					Thread.sleep(2000);
 					// do i want to go to a different floor? 
 					boolean wantToGoToAnotherFloor = myRandGen.nextBoolean();
 					if (wantToGoToAnotherFloor) {

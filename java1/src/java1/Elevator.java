@@ -36,7 +36,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren öppnas.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(500);
+					Thread.sleep(5);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -53,7 +53,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren stängs.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(500);
+					Thread.sleep(5);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -135,7 +135,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(500);
+					Thread.sleep(5);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -157,7 +157,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(500);
+					Thread.sleep(5);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -188,7 +188,7 @@ public class Elevator implements Runnable {
 						System.out.print("Väntar.");
 						for (int i = 0; i < 7 ; i++) {
 							System.out.print(".");
-							Thread.sleep(200);
+							Thread.sleep(2);
 						}
 						System.out.println("");
 					} catch (InterruptedException e) {
