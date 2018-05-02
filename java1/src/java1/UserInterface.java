@@ -34,9 +34,26 @@ public class UserInterface implements Runnable {
 			System.out.println("------------------------------------");
 			System.out.println(floor);
 			System.out.println("------------------------------------");
+						
+			
+			
 		}
 		
-						
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+			
 				
 		
 		

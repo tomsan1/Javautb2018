@@ -36,7 +36,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren öppnas.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(5);
+					Thread.sleep(500);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -53,7 +53,7 @@ public class Elevator implements Runnable {
 			System.out.print("Dörren stängs.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(5);
+					Thread.sleep(500);
 					System.out.print(".");
 				}
 			} catch (InterruptedException e) {
@@ -87,9 +87,7 @@ public class Elevator implements Runnable {
 		int bpListSize;
 		synchronized(buttonsPushed) {
 			bpListSize = buttonsPushed.size();
-		}
-		
-		
+		}	
 		if (bpListSize > 0) {
 			// get the highest and lowest floor pushed
 			int high = curFloor;
@@ -98,22 +96,16 @@ public class Elevator implements Runnable {
 			synchronized(buttonsPushed) {
 				for (Integer cBp : buttonsPushed) {
 					if (cBp.intValue() > high) {
-						
-							high = cBp.intValue();
-							bpListSize = buttonsPushed.size();
-						
-								
+						high = cBp.intValue();
+						bpListSize = buttonsPushed.size();				
 					}
 					if (cBp.intValue() < low) {
-						
-					
-							low = cBp.intValue();
-							bpListSize = buttonsPushed.size();
+						low = cBp.intValue();
+						bpListSize = buttonsPushed.size();
 					}
 						
-					}
 				}
-			
+			}
 			
 			// what way to go? up or down?
 			if(goingUp) {
@@ -143,7 +135,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(5);
+					Thread.sleep(500);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -158,7 +150,6 @@ public class Elevator implements Runnable {
 		}	
 	}
 	
-	
 	private void moveDownOneFloor()  {
 		
 		if (doorClosed) {
@@ -166,7 +157,7 @@ public class Elevator implements Runnable {
 			try {
 				for (int i = 0; i < 5; i++) {
 					System.out.print(".");
-					Thread.sleep(5);
+					Thread.sleep(500);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -183,7 +174,6 @@ public class Elevator implements Runnable {
 		
 	}
 	
-	
 	private void checkingFloor()  {
 		// check if button is pushed for this floor
 		// is the elevator supposed to stop at this floor?
@@ -198,7 +188,7 @@ public class Elevator implements Runnable {
 						System.out.print("Väntar.");
 						for (int i = 0; i < 7 ; i++) {
 							System.out.print(".");
-							Thread.sleep(2);
+							Thread.sleep(200);
 						}
 						System.out.println("");
 					} catch (InterruptedException e) {
@@ -213,8 +203,6 @@ public class Elevator implements Runnable {
 					}
 				}
 			}
-			
-			
 		}
 	}
 	
