@@ -1,19 +1,17 @@
 package java1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserInterface implements Runnable {
 
-	Person pers1;
-	Person pers2;
-	Person pers3;
-	Person pers4;
 	Elevator elev1;
+	List<Person> persons;
 	
-	public UserInterface(Person p1, Person p2, Person p3, Person p4, Elevator e1) {
-		pers1 = p1;
-		pers2 = p2;
-		pers3 = p3;
-		pers4 = p4;
+	public UserInterface(List p, Elevator e1) {
+		
 		elev1 = e1;
+		persons = p;
 		
 	}
 	
@@ -27,13 +25,41 @@ public class UserInterface implements Runnable {
 		for (int floor = 0; floor < elev1.getNoOfFloors(); floor++ ) {
 				
 			String personsInElevator = "";
-			String personsOutsideElevator = "";
+			
 			String someOnePushed = "";
 			
+			for (Person cP : persons) {
+				//for persons inside elevator
+				if (cP.isInElevator())
+					personsInElevator = personsInElevator + ", " + cP.getName().substring(0, 1);
+			}
+			//printing elevator
+			if (elev1.getCurFloor() == floor) {
+				System.out.println("------------------------------------");
+				System.out.print(floor + " ");
+				for (Person cP : persons) {
+					if (cP.getCurrentFloor() == floor && ! cP.isInElevator()) {
+						System.out.print(cP.getName().substring(0, 1) + ", ");
+					}
+				}
+				System.out.println(" | " + personsInElevator + " |");
+				System.out.println("------------------------------------");
+				personsInElevator = "";
+					
+			}
+			else {
+				System.out.println("------------------------------------");
+				System.out.print(floor + " ");
+				for (Person cP : persons) {
+					if (cP.getCurrentFloor() == floor && ! cP.isInElevator()) {
+						System.out.print(cP.getName().substring(0, 1) + ", ");
+					}
+					
+				}
+				System.out.println("------------------------------------");
+				
+			}
 			
-			System.out.println("------------------------------------");
-			System.out.println(floor);
-			System.out.println("------------------------------------");
 						
 			
 			

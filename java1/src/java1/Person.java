@@ -37,9 +37,9 @@ public class Person implements Runnable {
 	}
 	public void enterElevator() {
 		if (myElevator.isDoorOpen()) {
-			System.out.println(this.getName() + " går in i hissen");
+			//System.out.println(this.getName() + " går in i hissen");
 			this.isInElevator = true;
-			System.out.println(this.getName() + " trycker på knappen för våning:" + this.desieredFloor);
+			//System.out.println(this.getName() + " trycker på knappen för våning:" + this.desieredFloor);
 			synchronized(myElevator) {
 				myElevator.pushButton((Integer)this.desieredFloor);
 			}
@@ -50,10 +50,12 @@ public class Person implements Runnable {
 		if (myElevator.isDoorOpen()) {
 			this.isInElevator = false;
 			this.currentFloor = this.getDesieredFloor();
-			System.out.print(this.getName() + " kliver av hissen");
+			//System.out.print(this.getName() + " kliver av hissen");
 		}
 	}
-	
+	public boolean isInElevator() {
+		return isInElevator;	
+	}
 	@Override
 	public void run() {
 		
@@ -71,7 +73,7 @@ public class Person implements Runnable {
 						enterElevator();
 					}
 					else {
-						//Thread.sleep(100);
+						//Thread.sleep(3000);
 						if (! this.isInElevator) {
 							
 							//Put code here to check what persons that are waiting for elevator		
@@ -84,7 +86,7 @@ public class Person implements Runnable {
 				}
 				else {
 					//get random decision if i want to go for elevatorride
-					Thread.sleep(2000);
+					Thread.sleep(8000);
 					// do i want to go to a different floor? 
 					boolean wantToGoToAnotherFloor = myRandGen.nextBoolean();
 					if (wantToGoToAnotherFloor) {

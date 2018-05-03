@@ -33,35 +33,35 @@ public class Elevator implements Runnable {
 	
 	public void  openDoor()  {
 		if (doorClosed) {
-			System.out.print("Dörren öppnas.");
+			//System.out.print("Dörren öppnas.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(5);
-					System.out.print(".");
+					Thread.sleep(500);
+					//System.out.print(".");
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.doorClosed = false;
-			System.out.println("Dörren öppen");
+			//System.out.println("Dörren öppen");
 		}
 	}
 	public void closeDoor()  {
 		
 		if (! doorClosed) {
-			System.out.print("Dörren stängs.");
+			//System.out.print("Dörren stängs.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					Thread.sleep(5);
-					System.out.print(".");
+					Thread.sleep(500);
+					//System.out.print(".");
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.doorClosed = true;
-			System.out.println("Dörren stängd");
+			//System.out.println("Dörren stängd");
 		}
 	}
 	public boolean isDoorOpen() {
@@ -131,18 +131,18 @@ public class Elevator implements Runnable {
 	
 	private void moveUpOneFloor()  {
 		if (doorClosed) {
-			System.out.print("Åker från våning:" + curFloor + " på väg upp.");
+			//System.out.print("Åker från våning:" + curFloor + " på väg upp.");
 			try {
 				for (int i = 0; i < 5; i++) {
-					System.out.print(".");
-					Thread.sleep(5);
+					//System.out.print(".");
+					Thread.sleep(500);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			curFloor = curFloor + 1;
-			System.out.println(" framme vid våning " + curFloor);
+			//System.out.println(" framme vid våning " + curFloor);
 			checkingFloor();
 		}
 		else {
@@ -153,18 +153,18 @@ public class Elevator implements Runnable {
 	private void moveDownOneFloor()  {
 		
 		if (doorClosed) {
-			System.out.print("Åker från våning:" + curFloor + " på väg ner");
+			//System.out.print("Åker från våning:" + curFloor + " på väg ner");
 			try {
 				for (int i = 0; i < 5; i++) {
-					System.out.print(".");
-					Thread.sleep(5);
+					//System.out.print(".");
+					Thread.sleep(500);
 				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			curFloor = curFloor - 1;
-			System.out.println(" framme vid våning " + curFloor);
+			//System.out.println(" framme vid våning " + curFloor);
 			checkingFloor();
 			
 		}
@@ -182,15 +182,15 @@ public class Elevator implements Runnable {
 			for (Integer cBp : buttonsPushed) {
 				if (cBp.intValue() == curFloor){
 					haveStoppedOnThisFloor = true;
-					System.out.println("Stannar på våning:" + curFloor);
+					//System.out.println("Stannar på våning:" + curFloor);
 					openDoor();
 					try {
-						System.out.print("Väntar.");
+						//System.out.print("Väntar.");
 						for (int i = 0; i < 7 ; i++) {
-							System.out.print(".");
-							Thread.sleep(2);
+							//System.out.print(".");
+							Thread.sleep(200);
 						}
-						System.out.println("");
+						//System.out.println("");
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
