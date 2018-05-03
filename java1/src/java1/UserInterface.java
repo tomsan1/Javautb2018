@@ -42,8 +42,13 @@ public class UserInterface implements Runnable {
 						System.out.print(cP.getName().substring(0, 1) + ", ");
 					}
 				}
-				System.out.println(" | " + personsInElevator + " |");
-				System.out.println("------------------------------------");
+				if (elev1.isDoorClosed()){
+					System.out.println(" | " + personsInElevator + " |");
+				}
+				else {
+					System.out.println("   " + personsInElevator + " |");
+				}
+				
 				personsInElevator = "";
 					
 			}
@@ -56,7 +61,7 @@ public class UserInterface implements Runnable {
 					}
 					
 				}
-				System.out.println("------------------------------------");
+				System.out.println("                                 ");
 				
 			}
 			
@@ -96,7 +101,7 @@ public class UserInterface implements Runnable {
 		while (true) {
 			printStateOfElevator();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
