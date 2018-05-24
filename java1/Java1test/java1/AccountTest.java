@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 
-import javax.security.auth.login.AccountException;
 
 import org.junit.Before;
 
@@ -13,12 +12,12 @@ public class AccountTest {
 	Account myAccount;
 	@Before
 	public void setUp() {
-		System.out.println("Before");
+		
 		myAccount = new Account();	
 	}
 	@Test
 	public void NewAccountBalanceShouldBeZero() {
-		System.out.println("newaccount...");
+		
 		assertEquals("New accountbalance was not zero", 0, myAccount.getBalance());
 	}
 	
