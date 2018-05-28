@@ -46,18 +46,24 @@ public class AppointmentHandler {
 		//Create code for this will need some id in the Appointmentclass
 	}
 	
-	private boolean isValid(Appointment appointment) {
+	public boolean isValid(Appointment appointment) {
 		
 		//Will add more conditions here 
 		if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
 			System.out.println("Du försöker skapa en bokning före aktuellt datum var vänlig köp en tidsmaskin");
 			return false;
 		}
+		if (appointment.getEmploye() == null) {
+			return false;
+		}
+		if (appointment.getCustomer() == null) {
+			return false;
+		}
 		
 		return true;
 	}
 	
-	private boolean isAvalible(Appointment appointment) {
+	public boolean isAvalible(Appointment appointment) {
 		
 		for(Appointment currentAppointment : ap) {
 			
