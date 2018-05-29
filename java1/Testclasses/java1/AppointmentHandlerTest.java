@@ -326,20 +326,12 @@ public class AppointmentHandlerTest {
 		assertEquals("CustFname", myAppHandler.getAppointmentForTesting().getCustomer().getFname());
 		//More checks if needed..
 		
-		//TODO Should be nice to delete the Test.txtfiles  
-    
-		
-		
-		
-//		Thread.sleep(500);
-//		File aFile = new File("c:\\TestAppointments.txt");
-//		
-//		if(aFile.delete()) {
-//			System.out.println("delete sucess");
-//		}
-//		else {
-//			System.out.println("delete unsucessfull...fuck...");
-//		}
+		File aFile = new File("c:\\TestAppointments.txt");
+		aFile.delete();
+		aFile = new File("c:\\TestCustomers.txt");
+		aFile.delete();
+		aFile = new File("c:\\TestEmployes.txt");
+		aFile.delete();
 		
 		
 		

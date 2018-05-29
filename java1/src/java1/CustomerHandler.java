@@ -115,6 +115,7 @@ public class CustomerHandler {
 				addCustomer(aCust);				
 			}	
 		}
+		input.close();
 	}
 	
 
