@@ -4,10 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import org.junit.Before;
@@ -303,34 +299,35 @@ public class AppointmentHandlerTest {
 	}
 	@Test
 	public void TestToSaveAppointmentsCustomersAndEmployesToFileShouldReturnTrue() throws IOException, InterruptedException {
-		myAppHandler.saveToFile("c:\\TestAppointments.txt");
+		myAppHandler.saveToFile("textfiles\\TestAppointments.txt");
 		EmployeHandler myEmpHandler = new EmployeHandler();
 		myEmpHandler.addEmploye(myAppHandler.getAppointmentForTesting().getEmploye());
 		CustomerHandler myCustHandler = new CustomerHandler();
 		myCustHandler.addCustomer(myAppHandler.getAppointmentForTesting().getCustomer());
 		
-		myEmpHandler.saveToFile("c:\\TestEmployes.txt");
-		myCustHandler.saveToFile("c:\\TestCustomers.txt");
+		myEmpHandler.saveToFile("textfiles\\TestEmployes.txt");
+		myCustHandler.saveToFile("textfiles\\TestCustomers.txt");
 		
 		myAppHandler = new AppointmentHandler();
 		myEmpHandler = new EmployeHandler();
 		myCustHandler = new CustomerHandler();
 		
-		myEmpHandler.readFromFile("c:\\TestEmployes.txt");
-		myCustHandler.readFromFile("c:\\TestCustomers.txt");
-		myAppHandler.readFromFile(myEmpHandler, myCustHandler, "c:\\TestAppointments.txt");
+		myEmpHandler.readFromFile("textfiles\\TestEmployes.txt");
+		myCustHandler.readFromFile("textfiles\\TestCustomers.txt");
+		myAppHandler.readFromFile(myEmpHandler, myCustHandler, "textfiles\\TestAppointments.txt");
 		
 		
 		
 		assertEquals("EmpFname", myAppHandler.getAppointmentForTesting().getEmploye().getFname());
 		assertEquals("CustFname", myAppHandler.getAppointmentForTesting().getCustomer().getFname());
+		assertEquals(LocalDateTime.now().getDayOfMonth() + 1, myAppHandler.getAppointmentForTesting().getStartTime().getDayOfMonth());
 		//More checks if needed..
 		
-		File aFile = new File("c:\\TestAppointments.txt");
+		File aFile = new File("textfiles\\TestAppointments.txt");
 		aFile.delete();
-		aFile = new File("c:\\TestCustomers.txt");
+		aFile = new File("textfiles\\TestCustomers.txt");
 		aFile.delete();
-		aFile = new File("c:\\TestEmployes.txt");
+		aFile = new File("textfiles\\TestEmployes.txt");
 		aFile.delete();
 		
 		

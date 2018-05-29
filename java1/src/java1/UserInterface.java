@@ -51,9 +51,9 @@ public class UserInterface {
 			
 				case 2: myAppHandler.printOutAppointments();
 						break;		
-				case 3: myCustHandler.readFromFile("c:\\customers.txt");
-						myEmpHandler.readFromFile("c:\\employes.txt");
-						myAppHandler.readFromFile(myEmpHandler, myCustHandler, "c:\\appointments.txt");
+				case 3: myCustHandler.readFromFile("textfiles\\customers.txt");
+						myEmpHandler.readFromFile("textfiles\\employes.txt");
+						myAppHandler.readFromFile(myEmpHandler, myCustHandler, "textfiles\\appointments.txt");
 						break;
 				
 				case 4: Customer myCust = createCustomer();
@@ -70,9 +70,9 @@ public class UserInterface {
 				case 7: myEmpHandler.printAllEmployes();
 						break;
 						
-				case 8: myCustHandler.saveToFile("c:\\customers.txt");
-						myEmpHandler.saveToFile("c:\\employes.txt");
-						myAppHandler.saveToFile("c:\\appointments.txt");
+				case 8: myCustHandler.saveToFile("textfiles\\customers.txt");
+						myEmpHandler.saveToFile("textfiles\\employes.txt");
+						myAppHandler.saveToFile("textfiles\\appointments.txt");
 						break;
 				
 				case 9: System.out.println("Avslutar programmet");
@@ -138,13 +138,10 @@ public class UserInterface {
 			System.out.println("Ange uppskattat pris:");
 			
 			estPrice = Integer.parseInt(input.readLine());
-			if (duration < 0 || duration > 5000) {
+			if (estPrice < 0 || estPrice > 5000) {
 				throw new DateOutOfBoundsException("Maxpris för klippning 5000:-");
 			}
-				
-			
 		}
-		
 		catch (NumberFormatException e) {
 			myErrHandler.errorHasOccured(e, "Fel i datumformat bokning avbryts");
 			return;
@@ -153,7 +150,6 @@ public class UserInterface {
 			myErrHandler.errorHasOccured(e, "Fel i datumsträng bokning avbryts");
 			return;
 		}
-		
 		
 		//Input for employe and customer
 		int empNr = 0;
@@ -171,9 +167,6 @@ public class UserInterface {
 			return;
 		}
 		
-		
-	
-		
 		System.out.println("Ange Kundnr:");
 		try {
 			custNr = Integer.parseInt(input.readLine());
@@ -188,9 +181,6 @@ public class UserInterface {
 			
 		}
 			
-		
-		
-		
 		//Creating new appointment with cust and emp
 		Appointment myApp = new Appointment();
 		
