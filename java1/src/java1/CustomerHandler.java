@@ -44,11 +44,11 @@ public class CustomerHandler {
 		//Not a good soloution....
 		return ch.size()+1;
 	}
-	public void saveToFile() {
+	public void saveToFile(String fileName) {
 		
 		
 		try {
-			FileWriter fw = new FileWriter(new File("C:\\customers.txt"));
+			FileWriter fw = new FileWriter(new File(fileName));
 			for (Customer currCust : ch) {
 				
 				fw.write(currCust.getCustNumber() + "," + currCust.getFname() + "," + currCust.getLName() + "\n");
@@ -63,10 +63,18 @@ public class CustomerHandler {
 		
 		
 	}
-	public void readFromFile() throws IOException {
+	public void readFromFile(String fileName) throws IOException {
+	
+		BufferedReader input; 
 		
+		try {
+			input = new BufferedReader(new FileReader(new File(fileName)));
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Fil på kunder hittades ej");
+			return;
+		}
 		
-		BufferedReader input = new BufferedReader(new FileReader(new File("C:\\customers.txt")));
 		
 		int fieldnr = 1;
 		String curStringContent = "";

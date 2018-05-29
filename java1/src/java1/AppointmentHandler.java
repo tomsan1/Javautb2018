@@ -2,6 +2,7 @@ package java1;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +26,11 @@ public class AppointmentHandler {
 			System.out.println("Uppskattat pris:" + currentAppointment.getEstPrice());
 			System.out.println("---------------------------------");	
 		}		
+	}
+	
+	public Appointment getAppointmentForTesting() {
+		//This is strictly used for testing purpose
+		return ap.get(0);
 	}
 	
 	public boolean insertAppointment(Appointment appointment) {
@@ -101,10 +107,10 @@ public class AppointmentHandler {
 	}
 	
 	
-	public void saveToFile() {
+	public void saveToFile(String fileName) {
 			
 			try {
-				FileWriter fw = new FileWriter(new File("C:\\appointments.txt"));
+				FileWriter fw = new FileWriter(new File(fileName));
 				for (Appointment currApp : ap) {
 				
 					fw.write(currApp.getEmploye().getEmployeNr() + "," + currApp.getCustomer().getCustNumber() + "," + currApp.getStartTime().getYear() + "," + currApp.getStartTime().getMonthValue()
@@ -122,10 +128,17 @@ public class AppointmentHandler {
 	
 	
 	
-	public void readFromFile(EmployeHandler myEmpHandler, CustomerHandler myCustHandler) throws IOException {
+	public void readFromFile(EmployeHandler myEmpHandler, CustomerHandler myCustHandler, String fileName) throws IOException {
 		
+		BufferedReader input;
 		
-		BufferedReader input = new BufferedReader(new FileReader(new File("C:\\appointments.txt")));
+		try {
+			input = new BufferedReader(new FileReader(new File(fileName)));
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Filen på appointments hittades ej");
+			return;
+		}
 		
 		int fieldnr = 1;
 		String curStringContent = "";
@@ -138,7 +151,7 @@ public class AppointmentHandler {
 		int StartMinute = 0;
 		
 		int endYear = 0;
-		int endMonth =0;
+		int endMonth = 0;
 		int endDay = 0;
 		int endHour = 0;
 		int endMinute = 0;

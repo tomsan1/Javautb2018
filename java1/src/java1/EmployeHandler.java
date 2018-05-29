@@ -2,6 +2,7 @@ package java1;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class EmployeHandler {
 		//Must take care of this later on will not work forever
 		return eh.size()+1;
 	}
-	public void saveToFile() {
+	public void saveToFile(String fileName) {
 		
 		
 		try {
-			FileWriter fw = new FileWriter(new File("C:\\employes.txt"));
+			FileWriter fw = new FileWriter(new File(fileName));
 			for (Employe currEmp : eh) {
 				
 				fw.write(currEmp.getEmployeNr() + "," + currEmp.getFname() + "," + currEmp.getLName() + "\n");
@@ -54,11 +55,17 @@ public class EmployeHandler {
 		}
 	}
 	
-	public void readFromFile() throws IOException {
+	public void readFromFile(String fileName) throws IOException {
 		
+		BufferedReader input;
+		try {
+			input = new BufferedReader(new FileReader(new File(fileName)));
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Filen på anställda hittades ej");
+			return;
+		}
 		
-
-		BufferedReader input = new BufferedReader(new FileReader(new File("C:\\employes.txt")));
 		
 		int fieldnr = 1;
 		String curStringContent = "";

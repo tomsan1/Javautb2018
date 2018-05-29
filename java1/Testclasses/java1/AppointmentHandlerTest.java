@@ -2,6 +2,12 @@ package java1;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import org.junit.Before;
@@ -43,8 +49,8 @@ public class AppointmentHandlerTest {
 	}
 	
 	@Test
-	public void TestToMakeAppointmentBeforeCurrentDateShouldReturnFalse() {
-		
+	public void TestToMakeAppointment1ShouldReturnFalse() {
+		//Testing to add appointment before current date 
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -73,7 +79,8 @@ public class AppointmentHandlerTest {
 	}
 	
 	@Test 
-	public void TestToMakeAppointmentWithStartTimeWithinOtherAppointmentShouldReturnFalse() {
+	public void TestToMakeAppointment2ShouldReturnFalse() {
+		//Testing to add appointment with starttime within an existing appointment
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -101,7 +108,8 @@ public class AppointmentHandlerTest {
 		assertEquals(false, myAppHandler.isAvalible(appToAdd));
 	}
 	@Test 
-	public void TestToMakeAppointmentWithEndTimeWithinOtherAppointmentShouldReturnFalse() {
+	public void TestToMakeAppointment3ShouldReturnFalse() {
+		//Testing to add appointment with endtime within an existing appointment
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -128,7 +136,9 @@ public class AppointmentHandlerTest {
 		assertEquals(false, myAppHandler.isAvalible(appToAdd));
 	}
 	@Test 
-	public void TestToMakeAppointmentWithAnotherAppointmentWithinAppointmentToCreate() {
+	public void TestToMakeAppointment4ShouldReturnFalse() {
+		//Testing to add appointment with another appointment within the appointment to create
+		
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -157,7 +167,8 @@ public class AppointmentHandlerTest {
 			
 	}
 	@Test 
-	public void TestToMakeAppointmentWithinAnotherAppointment() {
+	public void TestToMakeAppointment5ShouldReturnFalse() {
+		//Testing to add appointment whitin a existing appointment
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -185,7 +196,8 @@ public class AppointmentHandlerTest {
 		assertEquals(false, myAppHandler.isAvalible(appToAdd));
 	}
 	@Test
-	public void TestToMakeAppointmentWhenEverythingIsOkShouldReturnTrue() {
+	public void TestToMakeAppointment6() {
+		//Testing to add appointment when everything is ok 
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -213,7 +225,9 @@ public class AppointmentHandlerTest {
 		assertEquals(true, myAppHandler.isAvalible(appToAdd));
 	}
 	@Test 
-	public void TestToMakeAppointmentWhenEverythingIsOkButWhenAnotherappointmentExixstWithAnotherHairdresserShouldReturnTrue() {
+	public void TestToMakeAppointment7ShouldReturnTrue() {
+		//Testing to add appointment when everything is ok but 
+		//another appointment exist with another hairdresser
 		Employe aEmp     = new Employe();
 		Customer aCust   = new Customer();
 		Appointment appToAdd = new Appointment();
@@ -286,5 +300,48 @@ public class AppointmentHandlerTest {
 		appToAdd.setEndTime(endTime);
 		appToAdd.setEmploye(aEmp);		
 		assertEquals(false, myAppHandler.isValid(appToAdd));
+	}
+	@Test
+	public void TestToSaveAppointmentsCustomersAndEmployesToFileShouldReturnTrue() throws IOException, InterruptedException {
+		myAppHandler.saveToFile("c:\\TestAppointments.txt");
+		EmployeHandler myEmpHandler = new EmployeHandler();
+		myEmpHandler.addEmploye(myAppHandler.getAppointmentForTesting().getEmploye());
+		CustomerHandler myCustHandler = new CustomerHandler();
+		myCustHandler.addCustomer(myAppHandler.getAppointmentForTesting().getCustomer());
+		
+		myEmpHandler.saveToFile("c:\\TestEmployes.txt");
+		myCustHandler.saveToFile("c:\\TestCustomers.txt");
+		
+		myAppHandler = new AppointmentHandler();
+		myEmpHandler = new EmployeHandler();
+		myCustHandler = new CustomerHandler();
+		
+		myEmpHandler.readFromFile("c:\\TestEmployes.txt");
+		myCustHandler.readFromFile("c:\\TestCustomers.txt");
+		myAppHandler.readFromFile(myEmpHandler, myCustHandler, "c:\\TestAppointments.txt");
+		
+		
+		
+		assertEquals("EmpFname", myAppHandler.getAppointmentForTesting().getEmploye().getFname());
+		assertEquals("CustFname", myAppHandler.getAppointmentForTesting().getCustomer().getFname());
+		//More checks if needed..
+		
+		//TODO Should be nice to delete the Test.txtfiles  
+    
+		
+		
+		
+//		Thread.sleep(500);
+//		File aFile = new File("c:\\TestAppointments.txt");
+//		
+//		if(aFile.delete()) {
+//			System.out.println("delete sucess");
+//		}
+//		else {
+//			System.out.println("delete unsucessfull...fuck...");
+//		}
+		
+		
+		
 	}
 }

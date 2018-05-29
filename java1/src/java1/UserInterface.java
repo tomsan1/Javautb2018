@@ -51,9 +51,9 @@ public class UserInterface {
 			
 				case 2: myAppHandler.printOutAppointments();
 						break;		
-				case 3: myCustHandler.readFromFile();
-						myEmpHandler.readFromFile();
-						myAppHandler.readFromFile(myEmpHandler, myCustHandler);
+				case 3: myCustHandler.readFromFile("c:\\customers.txt");
+						myEmpHandler.readFromFile("c:\\employes.txt");
+						myAppHandler.readFromFile(myEmpHandler, myCustHandler, "c:\\appointments.txt");
 						break;
 				
 				case 4: Customer myCust = createCustomer();
@@ -70,9 +70,9 @@ public class UserInterface {
 				case 7: myEmpHandler.printAllEmployes();
 						break;
 						
-				case 8: myCustHandler.saveToFile();
-						myEmpHandler.saveToFile();
-						myAppHandler.saveToFile();
+				case 8: myCustHandler.saveToFile("c:\\customers.txt");
+						myEmpHandler.saveToFile("c:\\employes.txt");
+						myAppHandler.saveToFile("c:\\appointments.txt");
 						break;
 				
 				case 9: System.out.println("Avslutar programmet");
