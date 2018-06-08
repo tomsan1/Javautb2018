@@ -17,23 +17,7 @@
 
 </head>
 <body>
-
-<div class="container">
-  <h2>Add book</h2>
-  <form action="/savebook">
-    <div class="form-group">
-      <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" name="title">
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <input type="text" class="form-control" id="description" name="description">
-    </div>
-    
-    <button type="submit" class="btn btn-default">Save book</button>
-  </form>
-</div>
-	
+The book was saved.
 </body>  
  
 

@@ -25,6 +25,12 @@ public class DataDAO implements IDataDAO {
 	     return jdbcTemplate.query(query, new BookMapper());
 	}
 
+	@Override
+	public void saveBook(Book aBook) {
+		String query = "INSERT INTO book(title, description) VALUES ('" + aBook.getTitle() + "', '" + aBook.getDescription() + "');";
+		jdbcTemplate.execute(query);
+	}
+
  
 
 }

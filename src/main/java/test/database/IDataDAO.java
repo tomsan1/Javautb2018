@@ -9,4 +9,5 @@ import test.Book;
 
 public interface IDataDAO {
 	 public List<Book> fetchBooks();
+	 public void saveBook(Book aBook);
 }

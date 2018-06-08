@@ -6,14 +6,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import test.Book;
 
@@ -62,6 +64,18 @@ public class MainController {
     @GetMapping("/deletebook")
     public String deletebook(Map<String, Object> model, String query1) {
         return "deletebook";
+    }
+    
+    @GetMapping("/savebook")
+    public String savebook(@RequestParam("title") String title, @RequestParam("description") String description) {
+    	
+    	//do stuff to save book
+    	Book aBook = new Book();
+    	aBook.setTitle(title);
+    	aBook.setDescription(description);
+    	
+    	dataDao.saveBook(aBook);
+        return "savebook";
     }
 
 }

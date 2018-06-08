@@ -17,7 +17,7 @@
 
 </head>
 <body>
-deletebook	
+editbook
 </body>  
  
 

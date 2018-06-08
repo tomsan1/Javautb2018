@@ -30,14 +30,20 @@
       </tr>
     </thead>
     <tbody>
-      
+
       <c:forEach items="${books}" var="book">   			  
-      <tr>
+       
+      <tr>  
         <td>${book.getId()}</td>
         <td>${book.getTitle()}</td>
         <td>${book.getDescription()}</td>
+        
+        <td><button onclick="/editbook" type="submit" class="btn btn-primary" id="${book.getId()}">Edit</button></td>
+    
       </tr>
+     
    	  </c:forEach>
+   	  
     </tbody>
   </table>
 </div>
