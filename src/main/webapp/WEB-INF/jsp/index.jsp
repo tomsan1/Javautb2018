@@ -17,31 +17,15 @@
 
 </head>
 <body>
-	
-	
-<div class="container">
-  <h2>Books</h2>        
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Movie id</th>
-        <th>Title</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <c:forEach items="${books}" var="book">   			  
-      <tr>
-        <td>${book.getId()}</td>
-        <td>${book.getTitle()}</td>
-        <td>${book.getDescription()}</td>
-      </tr>
-   	  </c:forEach>
-    </tbody>
-  </table>
+	<div class="container">
+  <h2>Button Tags</h2>
+  <a href="books" class="btn btn-info" role="button">Show books in db</a>
+  <a href="addbooks" class="btn btn-info" role="button">Add books to db</a>
+  <a href="editbook" class="btn btn-info" role="button">edit book in db</a>
+  <a href="searchbook" class="btn btn-info" role="button">Search book in db</a>
+  <a href="deletebook" class="btn btn-info" role="button">Delete book from db</a>
 </div>
-
+	
 </body>  
  
 

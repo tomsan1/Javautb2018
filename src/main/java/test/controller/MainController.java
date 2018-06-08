@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import test.Book;
 
 import test.database.DataDAO;
 import test.database.IDataDAO;
@@ -26,17 +27,41 @@ public class MainController {
     @Autowired
     private IDataDAO dataDao;
    
-
-   
-    
-    
-    
     @GetMapping("/books")
-    public String shows(Map<String, Object> model, String query1) {
-
+    public String books(Map<String, Object> model, String query1) {
+    	
+    	List<Book> theBooks = dataDao.fetchBooks();
+    	
+    	model.put("books", theBooks);
+    	    	
         return "books";
     }
     
-   
+    @GetMapping("/index")
+    public String index(Map<String, Object> model, String query1) {
+    	
+    	
+        return "index";
+    }
+    
+    @GetMapping("/addbooks")
+    public String addbooks(Map<String, Object> model, String query1) {
+        return "addbooks";
+    }
+    
+    @GetMapping("/editbook")
+    public String editbook(Map<String, Object> model, String query1) {
+        return "editbook";
+    }
+  
+    @GetMapping("/searchbook")
+    public String searchbook(Map<String, Object> model, String query1) {
+        return "searchbook";
+    }
+    
+    @GetMapping("/deletebook")
+    public String deletebook(Map<String, Object> model, String query1) {
+        return "deletebook";
+    }
 
 }

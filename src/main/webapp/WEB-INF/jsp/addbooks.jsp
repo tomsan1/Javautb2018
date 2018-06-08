@@ -17,31 +17,8 @@
 
 </head>
 <body>
+Addbook
 	
-	
-<div class="container">
-  <h2>Books</h2>        
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Movie id</th>
-        <th>Title</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <c:forEach items="${books}" var="book">   			  
-      <tr>
-        <td>${book.getId()}</td>
-        <td>${book.getTitle()}</td>
-        <td>${book.getDescription()}</td>
-      </tr>
-   	  </c:forEach>
-    </tbody>
-  </table>
-</div>
-
 </body>  
  
 
